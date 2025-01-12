@@ -1,13 +1,19 @@
 import "./App.css";
+
 import { ToastContainer, toast } from "react-toastify"; // React-Toastify importu
 import "react-toastify/dist/ReactToastify.css"; // Stil dosyasını import et
+
 import { Home, Heart } from "lucide-react"; // Lucide'den 'Home' simgesini import et
+
 import { useSelector, useDispatch } from "react-redux";
 import { increment } from "./redux/actions/counterActions";
+
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import About from "./components/About";
-import Contact from "./components/Contact";
+
+import HomePage from "./components/homePage";
+import About from "./components/about";
+import Contact from "./components/contact";
+
 import { useEffect, useState } from "react";
 import { getData, postData } from "./api/api.js"; // Axios fonksiyonlarını import et
 
