@@ -10,10 +10,6 @@ import { increment } from "./redux/actions/counterActions";
 
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-import HomePage from "./components/homePage";
-import About from "./components/about";
-import Contact from "./components/contact";
-
 import { useEffect, useState } from "react";
 import { getData, postData } from "./api/api.js"; // Axios fonksiyonlarını import et
 
@@ -102,9 +98,9 @@ function App() {
           </nav>
 
           <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/about" component={About} />
-            <Route path="/contact" component={Contact} />
+            <Route exact path="/" />
+            <Route path="/about" />
+            <Route path="/contact" />
             <Route render={() => <h2>404 - Page Not Found</h2>} />
           </Switch>
         </div>
