@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { getData, postData } from "./api/api.js"; // Axios fonksiyonlarını import et
+import HomePage from "./pages/homePage.jsx";
 
 function App() {
   const count = useSelector((state) => state.counter.count);
@@ -98,7 +99,7 @@ function App() {
           </nav>
 
           <Switch>
-            <Route exact path="/" />
+            <Route exact path="/" component={HomePage} />
             <Route path="/about" />
             <Route path="/contact" />
             <Route render={() => <h2>404 - Page Not Found</h2>} />
