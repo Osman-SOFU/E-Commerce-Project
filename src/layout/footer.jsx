@@ -138,21 +138,18 @@ const Footer = () => {
                 </div>
 
                 <div className="relative w-[321px] h-[87px]">
-                  <div className="absolute w-[321px] h-[58px] top-0 left-0">
-                    <div className="relative h-[58px] rounded-[5px]">
-                      <div className="absolute w-[321px] h-[58px] top-0 left-0 bg-[#f8f8f8] rounded-[5px] overflow-hidden border border-solid border-[#e6e6e6]">
-                        <div className="absolute top-3.5 left-5 [font-family:'Montserrat-Regular',Helvetica] font-normal text-second-text-color text-sm tracking-[0.20px] leading-7 whitespace-nowrap">
-                          Your Email
-                        </div>
+                  <div className="w-[321px] h-[58px] relative  overflow-hidden">
+                    <div className="w-[321px] pl-5 pr-56 py-[15px] left-0 top-0 absolute bg-[#f8f8f8] rounded-[5px] border border-[#e6e6e6] justify-start items-center inline-flex overflow-hidden">
+                      <div className="text-[#727272] text-sm font-normal font-['Montserrat'] leading-7 tracking-tight">
+                        Your Email
                       </div>
-
-                      <button className="all-[unset] box-border absolute w-[117px] h-[58px] top-0 left-[204px]">
-                        <button className="all-[unset] box-border relative h-[58px] bg-primary-color rounded-[0px_5px_5px_0px] overflow-hidden border border-solid border-[#e6e6e6]">
-                          <div className="absolute top-3.5 left-[22px] [font-family:'Montserrat-Regular',Helvetica] font-normal text-light-text-color text-sm text-center tracking-[0.20px] leading-7 whitespace-nowrap">
-                            Subscribe
-                          </div>
+                    </div>
+                    <div className="w-[117px] h-[58px] left-[204px] top-0 absolute justify-center items-center inline-flex overflow-hidden">
+                      <div className="grow shrink basis-0 self-stretch px-[22.50px] py-[15px] bg-[#23a6f0] rounded-tr-[5px] rounded-br-[5px] border border-[#e6e6e6] justify-center items-center inline-flex overflow-hidden">
+                        <button className="text-center text-white text-sm font-normal font-['Montserrat'] leading-7 tracking-tight">
+                          Subscribe
                         </button>
-                      </button>
+                      </div>
                     </div>
                   </div>
 

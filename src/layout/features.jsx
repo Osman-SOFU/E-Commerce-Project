@@ -2,7 +2,7 @@ import iconCoolIcon125 from "../icons/icon-cool-icon-125.svg";
 import iconCoolIcon153 from "../icons/icon-cool-icon-153.svg";
 import iconCoolIcon1153 from "../icons/icon-cool-icon-1153.svg";
 
-const FeaturesCard = () => {
+const Features = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col w-[414px] items-center gap-20 px-0 py-20 relative">
@@ -84,4 +84,4 @@ const FeaturesCard = () => {
   );
 };
 
-export default FeaturesCard;
+export default Features;

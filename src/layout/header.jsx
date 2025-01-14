@@ -6,7 +6,7 @@ import technology1 from "../icons/technology-1.png";
 
 const Header = () => {
   return (
-    <div className="inline-flex flex-col items-start relative bg-white">
+    <div className="flex flex-col items-center">
       <div className="flex flex-col items-center relative bg-light-background-color">
         <div className="relative w-[414px] h-[532px] bg-light-background-color">
           <div className="absolute w-[188px] h-[58px] top-[23px] left-[35px]">
