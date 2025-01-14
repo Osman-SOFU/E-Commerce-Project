@@ -2,9 +2,9 @@ import img1 from "../icons/unsplash_p0j-mE6mGo4.jpg";
 import img2 from "../icons/unsplash_Bd7gNnWJBkU.jpg";
 import img3 from "../icons/shopCardLastPic.jpg";
 
-const ShopCard = () => {
+const Shop = () => {
   return (
-    <div className="inline-flex">
+    <div className="flex flex-col items-center">
       <div className="relative w-[414px] h-[1430px] bg-light-background-color">
         <div className="flex flex-col w-[345px] items-start px-0 py-6 relative left-[41px]">
           <div className="flex flex-col w-[345px] items-start gap-[15px] relative flex-[0_0_auto]">
@@ -86,4 +86,4 @@ const ShopCard = () => {
   );
 };
 
-export default ShopCard;
+export default Shop;

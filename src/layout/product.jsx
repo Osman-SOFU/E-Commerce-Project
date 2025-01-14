@@ -5,7 +5,7 @@ import img3 from "../icons/product-cover-3.png";
 import img4 from "../icons/product-cover-4.png";
 import img5 from "../icons/product-cover-5.png";
 
-const ProductCard = () => {
+const Product = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="relative w-[414px] h-[3168px] bg-white">
@@ -187,4 +187,4 @@ const ProductCard = () => {
   );
 };
 
-export default ProductCard;
+export default Product;
