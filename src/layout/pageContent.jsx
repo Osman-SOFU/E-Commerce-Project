@@ -3,42 +3,44 @@ import unsplashLks7VeiEag from "../icons/unsplash-lks7vei-eag.png";
 
 const PageContent = () => {
   return (
-    <div className="relative w-[414px] h-[910px] bg-light-background-color">
-      <div className="inline-flex flex-col items-center px-0 py-20 relative left-5">
-        <div className="flex flex-col w-[373px] items-center gap-[50px] relative flex-[0_0_auto]">
-          <div className="flex-col w-[280px] gap-4 flex items-start relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] font-h-5 font-[number:var(--h-5-font-weight)] text-primary-text-color text-[length:var(--h-5-font-size)] tracking-[var(--h-5-letter-spacing)] leading-[var(--h-5-line-height)] whitespace-nowrap [font-style:var(--h-5-font-style)]">
-              Featured Products
+    <div className="flex flex-col">
+      <div className="relative self-stretch w-full h-[910px] bg-white">
+        <div className="inline-flex items-center px-0 py-20 left-5 flex-col relative">
+          <div className="flex flex-col w-[373px] items-center gap-[50px] relative flex-[0_0_auto]">
+            <div className="flex flex-col w-[280px] items-start gap-4 relative flex-[0_0_auto]">
+              <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat-Bold',Helvetica] font-bold text-[#23a6f0] text-base tracking-[0.10px] leading-6 whitespace-nowrap">
+                Featured Products
+              </div>
+
+              <p className="relative w-[246px] font-h-2 font-[number:var(--h-2-font-weight)] text-[#252b42] text-[length:var(--h-2-font-size)] tracking-[var(--h-2-letter-spacing)] leading-[var(--h-2-line-height)] [font-style:var(--h-2-font-style)]">
+                We love what we do
+              </p>
+
+              <p className="w-[258px] relative [font-family:'Montserrat-Regular',Helvetica] font-normal text-[#727272] text-sm tracking-[0.20px] leading-5">
+                Problems trying to resolve the conflict between the two major
+                realms of Classical physics: <br />
+                Newtonian mechanics <br />
+                <br />
+                Problems trying to resolve the conflict between the two major
+                realms of Classical physics: <br />
+                Newtonian mechanics
+              </p>
             </div>
 
-            <p className="relative w-[246px] font-h-2 font-[number:var(--h-2-font-weight)] text-text-color text-[length:var(--h-2-font-size)] tracking-[var(--h-2-letter-spacing)] leading-[var(--h-2-line-height)] [font-style:var(--h-2-font-style)]">
-              We love what we do
-            </p>
+            <div className="flex w-[374.5px] items-start gap-[21.9px] relative flex-[0_0_auto] ml-[-0.75px] mr-[-0.75px]">
+              <div className="relative w-[374.21px] h-[363.55px] overflow-hidden">
+                <img
+                  className="absolute w-[158px] h-[364px] top-0 left-px object-cover"
+                  alt="Unsplash eag"
+                  src={unsplashLks7VeiEag}
+                />
 
-            <p className="relative w-[258px] font-paragraph font-[number:var(--paragraph-font-weight)] text-second-text-color text-[length:var(--paragraph-font-size)] tracking-[var(--paragraph-letter-spacing)] leading-[var(--paragraph-line-height)] [font-style:var(--paragraph-font-style)]">
-              Problems trying to resolve the conflict between the two major
-              realms of Classical physics: <br />
-              Newtonian mechanics <br />
-              <br />
-              Problems trying to resolve the conflict between the two major
-              realms of Classical physics: <br />
-              Newtonian mechanics
-            </p>
-          </div>
-
-          <div className="w-[374.5px] gap-[21.9px] ml-[-0.75px] mr-[-0.75px] flex items-start relative flex-[0_0_auto]">
-            <div className="relative w-[374.21px] h-[363.55px] overflow-hidden">
-              <img
-                className="absolute w-[158px] h-[364px] top-0 left-px object-cover"
-                alt="Unsplash eag"
-                src={unsplashLks7VeiEag}
-              />
-
-              <img
-                className="absolute w-[204px] h-[364px] top-0 left-[170px] object-cover"
-                alt="Unsplash eag"
-                src={image}
-              />
+                <img
+                  className="absolute w-[204px] h-[364px] top-0 left-[170px] object-cover"
+                  alt="Unsplash eag"
+                  src={image}
+                />
+              </div>
             </div>
           </div>
         </div>
