@@ -29,13 +29,13 @@ const PageContent = () => {
           <div className="flex w-[374.5px] items-start gap-[21.9px] relative flex-[0_0_auto] ml-[-0.75px] mr-[-0.75px]">
             <div className="relative w-[374.21px] h-[363.55px] overflow-hidden">
               <img
-                className="absolute w-[158px] h-[364px] top-0 left-px object-cover"
+                className="absolute w-[158px] h-[364px] top-0 object-cover"
                 alt="Unsplash eag"
                 src={unsplashLks7VeiEag}
               />
 
               <img
-                className="absolute w-[204px] h-[364px] top-0 left-[170px] object-cover"
+                className="absolute w-[158px] h-[364px] top-0 left-[170px] object-cover"
                 alt="Unsplash eag"
                 src={image}
               />
