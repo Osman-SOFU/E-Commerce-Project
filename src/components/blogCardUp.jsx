@@ -3,7 +3,7 @@ import iconAntDesignAreaChartOutlined from "../icons/icon-ant-design-area-chart-
 import iconArrowNext from "../icons/icon-arrow-next.svg";
 import img1 from "../icons/unsplash-xnfoy9sfcgi.png";
 
-const ContentCardUp = () => {
+const BlogCardUp = () => {
   return (
     <div className="inline-flex flex-col items-start relative bg-light-background-color border border-solid border-black">
       <div
@@ -87,4 +87,4 @@ const ContentCardUp = () => {
   );
 };
 
-export default ContentCardUp;
+export default BlogCardUp;

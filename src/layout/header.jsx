@@ -1,62 +1,65 @@
-import icnSettingsIcnXs from "../icons/icn-settings-icn-xs.svg";
-import icnMenuIcnXs from "../icons/icn-menu-icn-xs.svg";
-import icnSearchIcnXs from "../icons/icn-search-icn-xs.svg";
-import icnShoppingCartIcnXs from "../icons/icn-shopping-cart-icn-xs.svg";
 import technology1 from "../icons/technology-1.png";
 
+import { User, Search, ShoppingCart, Logs } from "lucide-react";
+
 const Header = () => {
+  const handleClick = () => {
+    alert("Resme tıkladınız!");
+  };
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col items-center relative bg-light-background-color">
         <div className="relative w-[414px] h-[532px] bg-light-background-color">
-          <div className="absolute w-[188px] h-[58px] top-[23px] left-[35px]">
-            <div className="absolute w-[187px] h-[58px] top-0 left-0">
-              <div className="absolute top-3 left-0 [font-family:'Montserrat-Bold',Helvetica] font-bold text-text-color text-2xl tracking-[0.10px] leading-8 whitespace-nowrap">
-                Bandage
-              </div>
+          <div className="absolute w-8 h-8 top-8 left-[35px]">
+            <div className="[font-family:'Montserrat-Bold',Helvetica] font-bold text-text-color text-2xl tracking-[0.10px] leading-8 whitespace-nowrap">
+              Bandage
             </div>
-
-            <img
-              className="absolute w-[21px] h-[22px] top-[15px] left-[167px]"
-              alt="Frame"
-              src={icnSettingsIcnXs}
-            />
           </div>
-
-          <img
-            className="absolute w-6 h-6 top-10 left-[248px]"
-            alt="Icn search icn xs"
-            src={icnSearchIcnXs}
+          <User
+            className="absolute w-8 h-8 top-8 left-[200px]"
+            onClick={handleClick}
           />
-
-          <img
-            className="absolute w-6 h-[22px] top-[41px] left-[296px]"
-            alt="Icn shopping cart"
-            src={icnShoppingCartIcnXs}
+          <Search
+            className="absolute w-8 h-8 top-8 left-[248px]"
+            onClick={handleClick}
           />
-
-          <img
-            className="absolute w-6 h-3.5 top-[45px] left-[352px]"
-            alt="Icn menu icn xs"
-            src={icnMenuIcnXs}
+          <ShoppingCart
+            className="absolute w-8 h-8 top-8 left-[296px]"
+            onClick={handleClick}
+          />
+          <Logs
+            className="absolute w-8 h-8 top-8 left-[352px]"
+            onClick={handleClick}
           />
 
           <div className="inline-flex flex-col items-center gap-[30px] absolute top-[164px] left-[145px]">
-            <div className="relative w-fit mt-[-1.00px] font-mobile-menu font-[number:var(--mobile-menu-font-weight)] text-second-text-color text-[length:var(--mobile-menu-font-size)] text-center tracking-[var(--mobile-menu-letter-spacing)] leading-[var(--mobile-menu-line-height)] whitespace-nowrap [font-style:var(--mobile-menu-font-style)]">
+            <button
+              onClick={handleClick}
+              className="relative w-fit mt-[-1.00px] font-mobile-menu font-[number:var(--mobile-menu-font-weight)] text-second-text-color text-[length:var(--mobile-menu-font-size)] text-center tracking-[var(--mobile-menu-letter-spacing)] leading-[var(--mobile-menu-line-height)] whitespace-nowrap [font-style:var(--mobile-menu-font-style)]"
+            >
               Home
-            </div>
+            </button>
 
-            <div className="relative w-fit font-mobile-menu font-[number:var(--mobile-menu-font-weight)] text-second-text-color text-[length:var(--mobile-menu-font-size)] text-center tracking-[var(--mobile-menu-letter-spacing)] leading-[var(--mobile-menu-line-height)] whitespace-nowrap [font-style:var(--mobile-menu-font-style)]">
+            <button
+              onClick={handleClick}
+              className="relative w-fit font-mobile-menu font-[number:var(--mobile-menu-font-weight)] text-second-text-color text-[length:var(--mobile-menu-font-size)] text-center tracking-[var(--mobile-menu-letter-spacing)] leading-[var(--mobile-menu-line-height)] whitespace-nowrap [font-style:var(--mobile-menu-font-style)]"
+            >
               Product
-            </div>
+            </button>
 
-            <div className="relative w-fit font-mobile-menu font-[number:var(--mobile-menu-font-weight)] text-second-text-color text-[length:var(--mobile-menu-font-size)] text-center tracking-[var(--mobile-menu-letter-spacing)] leading-[var(--mobile-menu-line-height)] whitespace-nowrap [font-style:var(--mobile-menu-font-style)]">
+            <button
+              onClick={handleClick}
+              className="relative w-fit font-mobile-menu font-[number:var(--mobile-menu-font-weight)] text-second-text-color text-[length:var(--mobile-menu-font-size)] text-center tracking-[var(--mobile-menu-letter-spacing)] leading-[var(--mobile-menu-line-height)] whitespace-nowrap [font-style:var(--mobile-menu-font-style)]"
+            >
               Pricing
-            </div>
+            </button>
 
-            <div className="relative w-fit font-mobile-menu font-[number:var(--mobile-menu-font-weight)] text-second-text-color text-[length:var(--mobile-menu-font-size)] text-center tracking-[var(--mobile-menu-letter-spacing)] leading-[var(--mobile-menu-line-height)] whitespace-nowrap [font-style:var(--mobile-menu-font-style)]">
+            <button
+              onClick={handleClick}
+              className="relative w-fit font-mobile-menu font-[number:var(--mobile-menu-font-weight)] text-second-text-color text-[length:var(--mobile-menu-font-size)] text-center tracking-[var(--mobile-menu-letter-spacing)] leading-[var(--mobile-menu-line-height)] whitespace-nowrap [font-style:var(--mobile-menu-font-style)]"
+            >
               Contact
-            </div>
+            </button>
           </div>
         </div>
 
@@ -78,13 +81,13 @@ const Header = () => {
                 small scale.
               </p>
 
-              <button className="all-[unset] box-border inline-flex items-start gap-2.5 relative flex-[0_0_auto]">
+              <div className="all-[unset] box-border inline-flex items-start gap-2.5 relative flex-[0_0_auto]">
                 <div className="inline-flex flex-col items-center gap-2.5 px-10 py-[15px] relative flex-[0_0_auto] bg-primary-color rounded-[5px] overflow-hidden">
-                  <div className="relative w-fit mt-[-1.00px] font-h-3 font-[number:var(--h-3-font-weight)] text-light-text-color text-[length:var(--h-3-font-size)] text-center tracking-[var(--h-3-letter-spacing)] leading-[var(--h-3-line-height)] whitespace-nowrap [font-style:var(--h-3-font-style)]">
+                  <button className="relative w-fit mt-[-1.00px] font-h-3 font-[number:var(--h-3-font-weight)] text-light-text-color text-[length:var(--h-3-font-size)] text-center tracking-[var(--h-3-letter-spacing)] leading-[var(--h-3-line-height)] whitespace-nowrap [font-style:var(--h-3-font-style)]">
                     SHOP NOW
-                  </div>
+                  </button>
                 </div>
-              </button>
+              </div>
             </div>
 
             <div className="flex flex-col h-[453px] items-center justify-center relative self-stretch w-full">

@@ -38,11 +38,11 @@ const ShopCard = () => {
                 {shop.title} <br />
                 {shop.week}
               </p>
-              <button className="all-[unset] box-border inline-flex flex-col items-center gap-2.5 px-10 py-[15px] absolute top-[150px] left-[42px] rounded-[5px] overflow-hidden border border-solid border-light-text-color">
-                <div className="relative w-fit mt-[-1.00px] font-btn-text text-light-text-color">
+              <div className="all-[unset] box-border inline-flex flex-col items-center gap-2.5 px-10 py-[15px] absolute top-[150px] left-[42px] rounded-[5px] overflow-hidden border border-solid border-light-text-color">
+                <button className="relative w-fit mt-[-1.00px] font-btn-text text-light-text-color">
                   {shop.butonText}
-                </div>
-              </button>
+                </button>
+              </div>
             </div>
           </div>
         </div>

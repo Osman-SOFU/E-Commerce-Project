@@ -1,7 +1,31 @@
-import image from "../icons/image.png";
-import unsplashLks7VeiEag from "../icons/unsplash-lks7vei-eag.png";
+import { useRef } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import PageContentCard from "../components/pageContentCard";
 
 const PageContent = () => {
+  const sliderRef = useRef(null); // Slider'ı kontrol etmek için referans
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    vertical: false, // Dikey kaydırma kapalı
+    verticalSwiping: false,
+  };
+
+  // Mouse tekerleği ile kaydırma fonksiyonu
+  const handleWheel = (e) => {
+    e.preventDefault();
+    if (e.deltaY > 0) {
+      sliderRef.current.slickNext(); // Aşağı kaydırma
+    } else {
+      sliderRef.current.slickPrev(); // Yukarı kaydırma
+    }
+  };
   return (
     <div className="flex flex-col items-center">
       <div className="inline-flex items-center px-0 py-20 left-5 flex-col relative">
@@ -26,20 +50,14 @@ const PageContent = () => {
             </p>
           </div>
 
-          <div className="flex w-[374.5px] items-start gap-[21.9px] relative flex-[0_0_auto] ml-[-0.75px] mr-[-0.75px]">
-            <div className="relative w-[374.21px] h-[363.55px] overflow-hidden">
-              <img
-                className="absolute w-[158px] h-[364px] top-0 object-cover"
-                alt="Unsplash eag"
-                src={unsplashLks7VeiEag}
-              />
-
-              <img
-                className="absolute w-[158px] h-[364px] top-0 left-[170px] object-cover"
-                alt="Unsplash eag"
-                src={image}
-              />
-            </div>
+          <div
+            className="flex w-[374.5px] items-start gap-[21.9px] relative flex-[0_0_auto] ml-[-0.75px] mr-[-0.75px]"
+            onWheel={handleWheel}
+          >
+            <Slider ref={sliderRef} {...sliderSettings} className="w-[345px]">
+              <PageContentCard />
+              <PageContentCard />
+            </Slider>
           </div>
         </div>
       </div>

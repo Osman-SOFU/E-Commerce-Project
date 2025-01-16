@@ -1,10 +1,39 @@
-import ContentCardDown from "../components/contentCardDown";
-import ContentCardUp from "../components/contentCardUp";
+import BlogCardUp from "../components/blogCardUp";
+import BlogCardDown from "../components/blogCardDown";
+import { useRef } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Blog = () => {
+  const sliderRef = useRef(null); // Slider'ı kontrol etmek için referans
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    vertical: true,
+    verticalSwiping: true,
+  };
+
+  // Mouse tekerleği ile kaydırma fonksiyonu
+  const handleWheel = (e) => {
+    e.preventDefault();
+    if (e.deltaY > 0) {
+      sliderRef.current.slickNext(); // Aşağı kaydırma
+    } else {
+      sliderRef.current.slickPrev(); // Yukarı kaydırma
+    }
+  };
+
   return (
     <div className="flex flex-col items-center">
-      <div className="relative w-[414px] h-[1402px] bg-white overflow-hidden">
+      <div
+        className="relative w-[414px] h-[1402px] bg-white overflow-hidden"
+        onWheel={handleWheel} // onWheel olayını dış kapsayıcıya ekliyoruz
+      >
         <div className="flex flex-col w-[414px] items-center gap-20 px-0 py-20 relative">
           <div className="items-center inline-flex flex-col relative flex-[0_0_auto]">
             <div className="inline-flex flex-col items-center gap-2.5 relative flex-[0_0_auto]">
@@ -18,15 +47,26 @@ const Blog = () => {
             </div>
           </div>
 
-          <div className="items-start justify-center gap-[30px] inline-flex flex-col relative flex-[0_0_auto]">
-            <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
-              <ContentCardUp />
+          {/* Slider bileşeni */}
+          <Slider ref={sliderRef} {...sliderSettings} className="w-[345px]">
+            <div className="items-start justify-center gap-[30px] inline-flex flex-col relative flex-[0_0_auto]">
+              <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
+                <BlogCardUp />
+              </div>
+              <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
+                <BlogCardDown />
+              </div>
             </div>
 
-            <div className="flex flex-col w-[329px] items-center relative flex-[0_0_auto]">
-              <ContentCardDown />
+            <div className="items-start justify-center gap-[30px] inline-flex flex-col relative flex-[0_0_auto]">
+              <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
+                <BlogCardUp />
+              </div>
+              <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
+                <BlogCardDown />
+              </div>
             </div>
-          </div>
+          </Slider>
         </div>
       </div>
     </div>
