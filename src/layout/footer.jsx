@@ -138,11 +138,13 @@ const Footer = () => {
                 </div>
 
                 <div className="relative w-[321px] h-[87px]">
-                  <div className="w-[321px] h-[58px] relative  overflow-hidden">
+                  <div className="w-[321px] h-[58px] relative overflow-hidden">
                     <div className="w-[321px] pl-5 pr-56 py-[15px] left-0 top-0 absolute bg-[#f8f8f8] rounded-[5px] border border-[#e6e6e6] justify-start items-center inline-flex overflow-hidden">
-                      <div className="text-[#727272] text-sm font-normal font-['Montserrat'] leading-7 tracking-tight">
-                        Your Email
-                      </div>
+                      <input
+                        type="email"
+                        placeholder="Your Email"
+                        className="w-full bg-transparent text-[#727272] text-sm font-normal font-['Montserrat'] leading-7 tracking-tight outline-none"
+                      />
                     </div>
                     <div className="w-[117px] h-[58px] left-[204px] top-0 absolute justify-center items-center inline-flex overflow-hidden">
                       <div className="grow shrink basis-0 self-stretch px-[22.50px] py-[15px] bg-[#23a6f0] rounded-tr-[5px] rounded-br-[5px] border border-[#e6e6e6] justify-center items-center inline-flex overflow-hidden">
