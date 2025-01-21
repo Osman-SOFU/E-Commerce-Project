@@ -12,6 +12,7 @@ import Shop from "../layout/shop";
 import HeaderDesktop from "../layout/headerDesktop"; // Masaüstü header'ı
 import ClientDesktop from "../layout/clientDesktop";
 import ShopDesktop from "../layout/shopDesktop";
+import ProductDesktop from "../layout/productDesktop";
 
 const HomePage = () => {
   const [isMobile, setIsMobile] = useState(true);
@@ -36,8 +37,8 @@ const HomePage = () => {
       {isMobile ? <Header /> : <HeaderDesktop />}
       {isMobile ? <Client /> : <ClientDesktop />}
       {isMobile ? <Shop /> : <ShopDesktop />}
+      {isMobile ? <Product /> : <ProductDesktop />}
 
-      <Product />
       <PageContent />
       <Features />
       <Blog />
