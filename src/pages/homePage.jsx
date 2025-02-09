@@ -9,10 +9,11 @@ import Features from "../layout/features";
 import Blog from "../layout/blog";
 import Product from "../layout/product";
 import Shop from "../layout/shop";
-import HeaderDesktop from "../layout/headerDesktop"; // Masaüstü header'ı
-import ClientDesktop from "../layout/clientDesktop";
-import ShopDesktop from "../layout/shopDesktop";
+//import HeaderDesktop from "../layout/headerDesktop"; // Masaüstü header'ı
+//import ClientDesktop from "../layout/clientDesktop";
+//import ShopDesktop from "../layout/shopDesktop";
 import ProductDesktop from "../layout/productDesktop";
+import PageContentDesktop from "../layout/productDesktop";
 
 const HomePage = () => {
   const [isMobile, setIsMobile] = useState(true);
@@ -32,14 +33,20 @@ const HomePage = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  //const HeaderComponent = isMobile ? Header : HeaderDesktop;
+  //const ClientComponent = isMobile ? Client : ClientDesktop;
+  //const ShopComponent = isMobile ? Shop : ShopDesktop;
+  const ProductComponent = isMobile ? Product : ProductDesktop;
+  const PageContentComponent = isMobile ? PageContent : PageContentDesktop;
+
   return (
     <div>
-      {isMobile ? <Header /> : <HeaderDesktop />}
-      {isMobile ? <Client /> : <ClientDesktop />}
-      {isMobile ? <Shop /> : <ShopDesktop />}
-      {isMobile ? <Product /> : <ProductDesktop />}
+      <Header />
+      <Client />
+      <Shop />
+      <ProductComponent />
+      <PageContentComponent />
 
-      <PageContent />
       <Features />
       <Blog />
       <Footer />
