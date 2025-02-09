@@ -28,15 +28,14 @@ const Shop = () => {
   };
 
   return (
-    <div className="flex flex-col items-center" onWheel={handleWheel}>
-      <div className="relative w-[414px] h-[1430px] bg-light-background-color">
-        <div className="flex flex-col w-[345px] items-start px-0 py-6 relative left-[41px]">
-          <Slider ref={sliderRef} {...sliderSettings} className="w-[345px]">
-            <ShopCard />
-            <ShopCard />
-          </Slider>
-        </div>
-      </div>
+    <div
+      className="w-full max-w-[1440px] mx-auto px-4 sm:px-1 lg:px-1 py-10 bg-white shadow-md"
+      onWheel={handleWheel}
+    >
+      <Slider {...sliderSettings} ref={sliderRef}>
+        <ShopCard />
+        <ShopCard />
+      </Slider>
     </div>
   );
 };

@@ -1,52 +1,98 @@
-import img1 from "../icons/unsplash_p0j-mE6mGo4.jpg";
+import img1 from "../icons/unsplash_p0j-mE6mGo4.png";
 import img2 from "../icons/unsplash_Bd7gNnWJBkU.jpg";
 import img3 from "../icons/shopCardLastPic.jpg";
 
-const ShopCard = () => {
-  const shops = [
-    {
-      image: img1,
-      title: "Top Product Of",
-      week: "the Week",
-      butonText: "EXPLORE ITEMS",
-    },
-    {
-      image: img2,
-      title: "Top Product Of",
-      week: "the Week",
-      butonText: "EXPLORE ITEMS",
-    },
-    {
-      image: img3,
-      title: "Top Product Of",
-      week: "the Week",
-      butonText: "EXPLORE ITEMS",
-    },
-  ];
+const shops = [
+  {
+    image: img1,
+    title: "Top Product Of",
+    week: "the Week",
+    buttonText: "EXPLORE ITEMS",
+  },
+  {
+    image: img2,
+    title: "Top Product Of",
+    week: "the Week",
+    buttonText: "EXPLORE ITEMS",
+  },
+  {
+    image: img3,
+    title: "Top Product Of",
+    week: "the Week",
+    buttonText: "EXPLORE ITEMS",
+  },
+];
 
+const ShopCard = () => {
   return (
-    <div>
-      {shops.map((shop, index) => (
-        <div className="relative w-[345px] h-[398px]" key={index}>
-          <div className="h-[398px] bg-white overflow-hidden">
+    <div className="flex flex-col md:flex-row w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-10 gap-6">
+      {/* 🖥️ Masaüstü Görünümü */}
+      <div className="hidden md:flex flex-1 gap-6">
+        {/* Sol Taraftaki Büyük Resim */}
+        <div className="relative flex-1 h-[500px] rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105">
+          <img
+            src={shops[0].image}
+            alt="Product"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute bottom-0 left-0 w-[420px] h-[238px] bg-[#2D8BC0] bg-opacity-75 p-6 text-white">
+            <p className="text-xl ml-6 mt-4 font-semibold tracking-wide">
+              {shops[0].title} <br /> {shops[0].week}
+            </p>
+            <button className="mt-4 px-6 py-6 ml-6 bg-transparent border-2 border-white rounded-lg text-white font-medium hover:bg-white hover:text-blue-800 transition-all">
+              {shops[0].buttonText}
+            </button>
+          </div>
+        </div>
+
+        {/* Sağ Tarafta Küçük Resimler */}
+        <div className="flex flex-col flex-1 gap-6">
+          {shops.slice(1).map((shop, index) => (
             <div
-              className="relative w-[345px] h-[398px] bg-cover bg-[50%_50%]"
-              style={{ backgroundImage: `url(${shop.image})` }}
-            />
-            <div className="absolute w-[346px] h-[238px] top-40 left-0 bg-[#2d8bc0bf]">
-              <p className="absolute top-[59px] left-[41px] font-h-3 font-[number:var(--h-3-font-weight)] text-white">
-                {shop.title} <br />
-                {shop.week}
-              </p>
-              <div className="all-[unset] box-border inline-flex flex-col items-center gap-2.5 px-10 py-[15px] absolute top-[150px] left-[42px] rounded-[5px] overflow-hidden border border-solid border-light-text-color">
-                <button className="relative w-fit mt-[-1.00px] font-btn-text text-light-text-color">
-                  {shop.butonText}
+              key={index}
+              className="relative w-full h-[240px] rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105"
+            >
+              <img
+                src={shop.image}
+                alt="Product"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute bottom-0 left-0 w-[300px] h-[153px] bg-[#2D8BC0] bg-opacity-75 p-4 text-white">
+                <p className="text-lg ml-4 font-semibold tracking-wide">
+                  {shop.title} <br /> {shop.week}
+                </p>
+                <button className="mt-4 px-4 py-4 ml-4 bg-transparent border-2 border-white rounded-lg text-white font-medium hover:bg-white hover:text-blue-800 transition-all">
+                  {shop.buttonText}
                 </button>
               </div>
             </div>
-          </div>
+          ))}
         </div>
-      ))}
+      </div>
+
+      {/* 📱 Mobil Görünümü (Bütün resimler eşit ve üst üste olacak) */}
+      <div className="flex flex-col md:hidden gap-6">
+        {shops.map((shop, index) => (
+          <div
+            key={index}
+            className="relative w-full h-[300px] rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105"
+          >
+            <img
+              src={shop.image}
+              alt="Product"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute bottom-0 left-0 w-full h-[153px] bg-[#2D8BC0] bg-opacity-75 p-4 text-white">
+              <p className="text-lg font-semibold tracking-wide">
+                {shop.title} <br /> {shop.week}
+              </p>
+              <button className="mt-4 px-4 py-2 bg-transparent border-2 border-white rounded-lg text-white font-medium hover:bg-white hover:text-blue-800 transition-all">
+                {shop.buttonText}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
