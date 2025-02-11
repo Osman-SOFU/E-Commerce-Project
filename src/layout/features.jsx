@@ -5,75 +5,66 @@ import iconCoolIcon1153 from "../icons/icon-cool-icon-1153.svg";
 const Features = () => {
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-col w-[414px] items-center gap-20 px-0 py-20 relative">
+      <div className="flex flex-col w-full max-w-5xl items-center gap-20 px-0 py-20 relative">
         <div className="items-center inline-flex flex-col relative flex-[0_0_auto]">
           <div className="inline-flex flex-col items-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] font-h-4 font-[number:var(--h-4-font-weight)] text-second-text-color text-[length:var(--h-4-font-size)] text-center tracking-[var(--h-4-letter-spacing)] leading-[var(--h-4-line-height)] whitespace-nowrap [font-style:var(--h-4-font-style)]">
+            <div className="text-second-text-color text-center text-lg font-semibold">
               Featured Products
             </div>
 
-            <div className="relative w-fit [font-family:'Montserrat-Bold',Helvetica] font-bold text-text-color text-2xl text-center tracking-[0.10px] leading-8 whitespace-nowrap">
+            <div className="font-bold text-text-color text-2xl text-center">
               THE BEST SERVICES
             </div>
 
-            <p className="relative w-fit font-paragraph font-[number:var(--paragraph-font-weight)] text-second-text-color text-[length:var(--paragraph-font-size)] text-center tracking-[var(--paragraph-letter-spacing)] leading-[var(--paragraph-line-height)] [font-style:var(--paragraph-font-style)]">
+            <p className="text-second-text-color text-center">
               Problems trying to resolve <br />
               the conflict between
             </p>
           </div>
         </div>
 
-        <div className="items-start justify-center gap-[30px] inline-flex flex-col relative flex-[0_0_auto]">
-          <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
-            <div className="inline-flex flex-col items-center gap-5 px-10 py-[35px] relative flex-[0_0_auto]">
+        {/* Masaüstünde Yatay, Mobilde Dikey Hizalama */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-10 relative w-full">
+          <div className="flex flex-col md:flex-1 items-center w-full">
+            <div className="flex flex-col items-center gap-5 px-5 py-10 w-full">
               <img
-                className="relative w-[72px] h-[72px]"
-                alt="Icon cool icon"
+                className="w-16 h-16"
                 src={iconCoolIcon1153}
+                alt="Easy Wins"
               />
-
-              <div className="relative w-[235px] font-h-3 font-[number:var(--h-3-font-weight)] text-text-color text-[length:var(--h-3-font-size)] text-center tracking-[var(--h-3-letter-spacing)] leading-[var(--h-3-line-height)] [font-style:var(--h-3-font-style)]">
+              <div className="w-full text-center font-semibold text-text-color text-xl">
                 Easy Wins
               </div>
-
-              <p className="relative w-[225px] font-paragraph font-[number:var(--paragraph-font-weight)] text-second-text-color text-[length:var(--paragraph-font-size)] text-center tracking-[var(--paragraph-letter-spacing)] leading-[var(--paragraph-line-height)] [font-style:var(--paragraph-font-style)]">
+              <p className="text-second-text-color text-center w-full">
                 Get your best looking smile now!
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
-            <div className="inline-flex flex-col items-center gap-5 px-10 py-[35px] relative flex-[0_0_auto]">
-              <img
-                className="relative w-[72px] h-[72px]"
-                alt="Icon cool icon"
-                src={iconCoolIcon153}
-              />
-
-              <div className="relative w-[235px] font-h-3 font-[number:var(--h-3-font-weight)] text-text-color text-[length:var(--h-3-font-size)] text-center tracking-[var(--h-3-letter-spacing)] leading-[var(--h-3-line-height)] [font-style:var(--h-3-font-style)]">
+          <div className="flex flex-col md:flex-1 items-center w-full">
+            <div className="flex flex-col items-center gap-5 px-5 py-10 w-full">
+              <img className="w-16 h-16" src={iconCoolIcon153} alt="Concrete" />
+              <div className="w-full text-center font-semibold text-text-color text-xl">
                 Concrete
               </div>
-
-              <p className="relative w-[232px] font-paragraph font-[number:var(--paragraph-font-weight)] text-second-text-color text-[length:var(--paragraph-font-size)] text-center tracking-[var(--paragraph-letter-spacing)] leading-[var(--paragraph-line-height)] [font-style:var(--paragraph-font-style)]">
+              <p className="text-second-text-color text-center w-full">
                 Defalcate is most focused in helping you discover your most
                 beautiful smile
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col w-[329px] items-center relative flex-[0_0_auto]">
-            <div className="inline-flex flex-col items-center gap-5 px-10 py-[35px] relative flex-[0_0_auto]">
+          <div className="flex flex-col md:flex-1 items-center w-full">
+            <div className="flex flex-col items-center gap-5 px-5 py-10 w-full">
               <img
-                className="relative w-[72px] h-[72px]"
-                alt="Icon cool icon"
+                className="w-16 h-16"
                 src={iconCoolIcon125}
+                alt="Hack Growth"
               />
-
-              <div className="relative w-[235px] font-h-3 font-[number:var(--h-3-font-weight)] text-text-color text-[length:var(--h-3-font-size)] text-center tracking-[var(--h-3-letter-spacing)] leading-[var(--h-3-line-height)] [font-style:var(--h-3-font-style)]">
+              <div className="w-full text-center font-semibold text-text-color text-xl">
                 Hack Growth
               </div>
-
-              <p className="relative w-[225px] font-paragraph font-[number:var(--paragraph-font-weight)] text-second-text-color text-[length:var(--paragraph-font-size)] text-center tracking-[var(--paragraph-letter-spacing)] leading-[var(--paragraph-line-height)] [font-style:var(--paragraph-font-style)]">
+              <p className="text-second-text-color text-center w-full">
                 Overcame any hurdle or any other problem.
               </p>
             </div>
