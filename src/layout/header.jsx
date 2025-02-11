@@ -18,7 +18,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="w-full max-w-[1440px] mx-auto p-4 sm:px-6 lg:px-8 bg-white shadow-md">
+    <header className="w-full max-w-[1440px] mx-auto p-4 sm:px-6 lg:px-8">
       {/* Üst Menü - Masaüstü Görünüm */}
       <div className="hidden lg:flex justify-between items-center px-6 py-3 bg-gray-900 text-white text-sm">
         <div className="flex items-center space-x-4">

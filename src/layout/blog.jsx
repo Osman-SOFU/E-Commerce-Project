@@ -1,5 +1,4 @@
-import BlogCardUp from "../components/blogCardUp";
-import BlogCardDown from "../components/blogCardDown";
+import BlogCard from "../components/blogCard";
 import { useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -31,41 +30,37 @@ const Blog = () => {
   return (
     <div className="flex flex-col items-center">
       <div
-        className="relative w-[414px] h-[1402px] bg-white overflow-hidden"
+        className="relative w-full max-w-4xl bg-white overflow-hidden"
         onWheel={handleWheel} // onWheel olayını dış kapsayıcıya ekliyoruz
       >
-        <div className="flex flex-col w-[414px] items-center gap-20 px-0 py-20 relative">
-          <div className="items-center inline-flex flex-col relative flex-[0_0_auto]">
-            <div className="inline-flex flex-col items-center gap-2.5 relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Montserrat-Bold',Helvetica] font-bold text-[#23a6f0] text-sm text-center tracking-[0.20px] leading-6 whitespace-nowrap">
+        <div className="flex flex-col w-full items-center gap-10 px-6 py-10 relative">
+          <div className="items-center flex flex-col relative">
+            <div className="flex flex-col items-center gap-2">
+              <div className="text-blue-500 font-bold text-sm text-center">
                 Practice Advice
               </div>
-
-              <div className="relative w-fit font-h-2 font-[number:var(--h-2-font-weight)] text-[#252b42] text-[length:var(--h-2-font-size)] text-center tracking-[var(--h-2-letter-spacing)] leading-[var(--h-2-line-height)] whitespace-nowrap [font-style:var(--h-2-font-style)]">
+              <div className="text-2xl font-bold text-gray-800 text-center">
                 Featured Posts
               </div>
             </div>
           </div>
 
           {/* Slider bileşeni */}
-          <Slider ref={sliderRef} {...sliderSettings} className="w-[345px]">
-            <div className="items-start justify-center gap-[30px] inline-flex flex-col relative flex-[0_0_auto]">
-              <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
-                <BlogCardUp />
+          <Slider
+            ref={sliderRef}
+            {...sliderSettings}
+            className="w-full max-w-md"
+          >
+            {[...Array(2)].map((_, index) => (
+              <div key={index} className="flex flex-col gap-6">
+                <div className="flex flex-col items-center">
+                  <BlogCard />
+                </div>
+                <div className="flex flex-col items-center">
+                  <BlogCard />
+                </div>
               </div>
-              <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
-                <BlogCardDown />
-              </div>
-            </div>
-
-            <div className="items-start justify-center gap-[30px] inline-flex flex-col relative flex-[0_0_auto]">
-              <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
-                <BlogCardUp />
-              </div>
-              <div className="flex flex-col w-[328px] items-center relative flex-[0_0_auto]">
-                <BlogCardDown />
-              </div>
-            </div>
+            ))}
           </Slider>
         </div>
       </div>
