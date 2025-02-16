@@ -1,183 +1,128 @@
-import colMd6 from "../icons/col-md-6.svg";
-import hr from "../icons/hr.svg";
+import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="flex flex-col items-center">
-      <div className="relative w-[414px] h-[1342px] bg-light-background-color">
-        <div className="absolute w-[414px] h-[173px] top-0 left-0">
-          <img
-            className="absolute w-[414px] h-px top-[141px] left-0 object-cover"
-            alt="Hr"
-            src={hr}
-          />
-
-          <div className="absolute w-[414px] h-[173px] top-0 left-0 bg-light-gray-1 overflow-hidden">
-            <div className="w-[325px] items-start px-0 py-10 left-11 flex flex-col relative">
-              <div className="flex-col items-center gap-[11.5px] inline-flex relative flex-[0_0_auto]">
-                <div className="w-[236px] gap-2.5 flex flex-col items-start relative flex-[0_0_auto]">
-                  <div className="relative w-[187px] h-[58px] overflow-hidden">
-                    <div className="absolute top-3 left-0 font-h-3 font-[number:var(--h-3-font-weight)] text-text-color text-[length:var(--h-3-font-size)] tracking-[var(--h-3-letter-spacing)] leading-[var(--h-3-line-height)] whitespace-nowrap [font-style:var(--h-3-font-style)]">
-                      Bandage
-                    </div>
-                  </div>
-                </div>
-
-                <img
-                  className="relative w-[243px] flex-[0_0_auto]"
-                  alt="Col md"
-                  src={colMd6}
-                />
-              </div>
-            </div>
+    <footer className="py-10 px-6 font-[Montserrat] flex justify-center">
+      <div className="w-full max-w-5xl mx-auto">
+        {/* Üst Kısım - Logo ve Sosyal Medya */}
+        <div className="flex flex-col md:flex-row justify-between ml-10 md:items-center mb-8">
+          <h2 className="text-2xl font-bold text-[#252B42]">Bandage</h2>
+          <div className="flex space-x-4 mt-4 md:mt-0">
+            <a href="#" className="text-blue-500 text-xl">
+              <FaFacebookF />
+            </a>
+            <a href="#" className="text-blue-500 text-xl">
+              <FaInstagram />
+            </a>
+            <a href="#" className="text-blue-500 text-xl">
+              <FaTwitter />
+            </a>
           </div>
         </div>
 
-        <div className="absolute w-[414px] h-[1071px] top-[173px] left-0 bg-white">
-          <div className="w-[321px] items-start px-0 py-[70px] left-[46px] flex flex-col relative">
-            <div className="flex-col items-start gap-[30px] inline-flex relative flex-[0_0_auto]">
-              <div className="w-[148px] gap-5 flex flex-col items-start relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] font-h-5 font-[number:var(--h-5-font-weight)] text-text-color text-[length:var(--h-5-font-size)] tracking-[var(--h-5-letter-spacing)] leading-[var(--h-5-line-height)] whitespace-nowrap [font-style:var(--h-5-font-style)]">
-                  Company Info
-                </div>
+        {/* Linkler */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-sm text-left ">
+          {/* Company Info */}
+          <div className="flex flex-col items-start ml-10">
+            <h3 className="font-semibold text-[#252B42] mb-2">Company Info</h3>
+            <ul className="space-y-1 text-[#737373]">
+              <li>
+                <a href="#">About Us</a>
+              </li>
+              <li>
+                <a href="#">Carrier</a>
+              </li>
+              <li>
+                <a href="#">We are hiring</a>
+              </li>
+              <li>
+                <a href="#">Blog</a>
+              </li>
+            </ul>
+          </div>
 
-                <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
-                  <div className="mt-[-1.00px] relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    About Us
-                  </div>
+          {/* Legal */}
+          <div className="flex flex-col items-start ml-10">
+            <h3 className="font-semibold text-[#252B42] mb-2">Legal</h3>
+            <ul className="space-y-1 text-[#737373]">
+              <li>
+                <a href="#">About Us</a>
+              </li>
+              <li>
+                <a href="#">Carrier</a>
+              </li>
+              <li>
+                <a href="#">We are hiring</a>
+              </li>
+              <li>
+                <a href="#">Blog</a>
+              </li>
+            </ul>
+          </div>
 
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    Carrier
-                  </div>
+          {/* Features */}
+          <div className="flex flex-col items-start ml-10">
+            <h3 className="font-semibold text-[#252B42] mb-2">Features</h3>
+            <ul className="space-y-1 text-[#737373]">
+              <li>
+                <a href="#">Business Marketing</a>
+              </li>
+              <li>
+                <a href="#">User Analytic</a>
+              </li>
+              <li>
+                <a href="#">Live Chat</a>
+              </li>
+              <li>
+                <a href="#">Unlimited Support</a>
+              </li>
+            </ul>
+          </div>
 
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    We are hiring
-                  </div>
+          {/* Resources */}
+          <div className="flex flex-col items-start ml-10">
+            <h3 className="font-semibold text-[#252B42] mb-2">Resources</h3>
+            <ul className="space-y-1 text-[#737373]">
+              <li>
+                <a href="#">IOS & Android</a>
+              </li>
+              <li>
+                <a href="#">Watch a Demo</a>
+              </li>
+              <li>
+                <a href="#">Customers</a>
+              </li>
+              <li>
+                <a href="#">API</a>
+              </li>
+            </ul>
+          </div>
 
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    Blog
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col w-[152px] items-start gap-5 relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] font-h-5 font-[number:var(--h-5-font-weight)] text-text-color text-[length:var(--h-5-font-size)] tracking-[var(--h-5-letter-spacing)] leading-[var(--h-5-line-height)] whitespace-nowrap [font-style:var(--h-5-font-style)]">
-                  Legal
-                </div>
-
-                <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
-                  <div className="mt-[-1.00px] relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    About Us
-                  </div>
-
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    Carrier
-                  </div>
-
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    We are hiring
-                  </div>
-
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    Blog
-                  </div>
-                </div>
-              </div>
-
-              <div className="w-[148px] gap-5 flex flex-col items-start relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] font-h-5 font-[number:var(--h-5-font-weight)] text-text-color text-[length:var(--h-5-font-size)] tracking-[var(--h-5-letter-spacing)] leading-[var(--h-5-line-height)] whitespace-nowrap [font-style:var(--h-5-font-style)]">
-                  Features
-                </div>
-
-                <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
-                  <div className="mt-[-1.00px] relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    Business Marketing
-                  </div>
-
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    User Analytic
-                  </div>
-
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    Live Chat
-                  </div>
-
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    Unlimited Support
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col w-[152px] items-start gap-5 relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] font-h-5 font-[number:var(--h-5-font-weight)] text-text-color text-[length:var(--h-5-font-size)] tracking-[var(--h-5-letter-spacing)] leading-[var(--h-5-line-height)] whitespace-nowrap [font-style:var(--h-5-font-style)]">
-                  Resources
-                </div>
-
-                <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
-                  <div className="mt-[-1.00px] relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    IOS &amp; Android
-                  </div>
-
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    Watch a Demo
-                  </div>
-
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    Customers
-                  </div>
-
-                  <div className="relative w-fit font-link font-[number:var(--link-font-weight)] text-second-text-color text-[length:var(--link-font-size)] tracking-[var(--link-letter-spacing)] leading-[var(--link-line-height)] whitespace-nowrap [font-style:var(--link-font-style)]">
-                    API
-                  </div>
-                </div>
-              </div>
-
-              <div className="w-[321px] gap-5 flex flex-col items-start relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] font-h-5 font-[number:var(--h-5-font-weight)] text-text-color text-[length:var(--h-5-font-size)] tracking-[var(--h-5-letter-spacing)] leading-[var(--h-5-line-height)] whitespace-nowrap [font-style:var(--h-5-font-style)]">
-                  Get In Touch
-                </div>
-
-                <div className="relative w-[321px] h-[87px]">
-                  <div className="w-[321px] h-[58px] relative overflow-hidden">
-                    <div className="w-[321px] pl-5 pr-56 py-[15px] left-0 top-0 absolute bg-[#f8f8f8] rounded-[5px] border border-[#e6e6e6] justify-start items-center inline-flex overflow-hidden">
-                      <input
-                        type="email"
-                        placeholder="Your Email"
-                        className="w-full bg-transparent text-[#727272] text-sm font-normal font-['Montserrat'] leading-7 tracking-tight outline-none"
-                      />
-                    </div>
-                    <div className="w-[117px] h-[58px] left-[204px] top-0 absolute justify-center items-center inline-flex overflow-hidden">
-                      <div className="grow shrink basis-0 self-stretch px-[22.50px] py-[15px] bg-[#23a6f0] rounded-tr-[5px] rounded-br-[5px] border border-[#e6e6e6] justify-center items-center inline-flex overflow-hidden">
-                        <button className="text-center text-white text-sm font-normal font-['Montserrat'] leading-7 tracking-tight">
-                          Subscribe
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="absolute top-[58px] left-0.5 [font-family:'Montserrat-Regular',Helvetica] font-normal text-second-text-color text-xs tracking-[0.20px] leading-7 whitespace-nowrap">
-                    Lore imp sum dolor Amit
-                  </p>
-                </div>
-              </div>
+          {/* Get In Touch */}
+          <div className="flex flex-col items-center md:items-start w-full">
+            <h3 className="font-semibold text-[#252B42] mb-2">Get In Touch</h3>
+            <div className="flex bg-gray-200 rounded-md overflow-hidden w-full max-w-[350px]">
+              <input
+                type="email"
+                placeholder="Your Email"
+                className="w-full px-3 py-2 text-sm text-gray-700 bg-transparent outline-none"
+              />
+              <button className="bg-blue-500 text-white px-4 py-2 text-sm">
+                Subscribe
+              </button>
             </div>
+            <p className="text-xs text-gray-500 mt-1 text-center md:text-left">
+              Lore imp sum dolor Amit
+            </p>
           </div>
         </div>
 
-        <div className="absolute w-[414px] h-[98px] top-[1244px] left-0 bg-[#f9f9f9]">
-          <div className="w-[414px] items-center px-0 py-[25px] flex flex-col relative">
-            <div className="items-center gap-[213px] inline-flex relative flex-[0_0_auto]">
-              <div className="flex flex-col w-[413px] items-center relative">
-                <p className="relative w-fit mt-[-1.00px] font-h-6 font-[number:var(--h-6-font-weight)] text-second-text-color text-[length:var(--h-6-font-size)] text-center tracking-[var(--h-6-letter-spacing)] leading-[var(--h-6-line-height)] [font-style:var(--h-6-font-style)]">
-                  Made With Love By <br />
-                  Finland All Right Reserved
-                </p>
-              </div>
-            </div>
-          </div>
+        {/* Alt Bölüm */}
+        <div className="text-center text-gray-600 text-xs mt-8">
+          Made With Love By <strong>Finland</strong> All Rights Reserved
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

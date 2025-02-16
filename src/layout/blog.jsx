@@ -28,37 +28,29 @@ const Blog = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col md:flex-row gap-6">
       <div
-        className="relative w-full max-w-4xl bg-white overflow-hidden"
+        className="relative w-full max-w-8xl bg-white overflow-hidden"
         onWheel={handleWheel} // onWheel olayını dış kapsayıcıya ekliyoruz
       >
-        <div className="flex flex-col w-full items-center gap-10 px-6 py-10 relative">
-          <div className="items-center flex flex-col relative">
-            <div className="flex flex-col items-center gap-2">
-              <div className="text-blue-500 font-bold text-sm text-center">
+        <div className="flex flex-col items-center py-10 px-4">
+          <div className="w-full max-w-6xl bg-white overflow-hidden">
+            {/* Başlık */}
+            <div className="text-center mb-8">
+              <h3 className="text-blue-500 font-bold text-2xl">
                 Practice Advice
-              </div>
-              <div className="text-2xl font-bold text-gray-800 text-center">
+              </h3>
+              <h3 className="text-gray-800 text-5xl mt-2 font-bold">
                 Featured Posts
-              </div>
+              </h3>
             </div>
           </div>
 
           {/* Slider bileşeni */}
-          <Slider
-            ref={sliderRef}
-            {...sliderSettings}
-            className="w-full max-w-md"
-          >
+          <Slider ref={sliderRef} {...sliderSettings} className="w-full">
             {[...Array(2)].map((_, index) => (
-              <div key={index} className="flex flex-col gap-6">
-                <div className="flex flex-col items-center">
-                  <BlogCard />
-                </div>
-                <div className="flex flex-col items-center">
-                  <BlogCard />
-                </div>
+              <div key={index} className="px-4 flex justify-center">
+                <BlogCard />
               </div>
             ))}
           </Slider>
