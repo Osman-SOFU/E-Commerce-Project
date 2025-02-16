@@ -29,8 +29,8 @@ const HomePage = () => {
       <Product />
       <PageContent />
       <Features />
-
       <Blog />
+
       <Footer />
     </div>
   );
