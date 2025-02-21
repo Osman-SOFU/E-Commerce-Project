@@ -3,7 +3,7 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="py-10 px-6 font-[Montserrat] flex justify-center">
-      <div className="w-full max-w-5xl mx-auto">
+      <div className="w-full max-w-[1440px] mx-auto">
         {/* Üst Kısım - Logo ve Sosyal Medya */}
         <div className="flex flex-col md:flex-row justify-between ml-10 md:items-center mb-8">
           <h2 className="text-2xl font-bold text-[#252B42]">Bandage</h2>

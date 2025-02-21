@@ -7,8 +7,9 @@ import "react-toastify/dist/ReactToastify.css"; // Stil dosyasını import et
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import HomePage from "./pages/homePage.jsx";
+import ShopPage from "./pages/shopPage";
 
-function App() {
+const App = () => {
   // useEffect ile sayfa yüklendiğinde toast göstermek
   useEffect(() => {
     // Sayfa yüklendiğinde toast bildirimini göster
@@ -20,15 +21,14 @@ function App() {
       <ToastContainer />
       <div className="flex flex-col">
         <Router>
-          <div>
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-            </Switch>
-          </div>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/shop" component={ShopPage} />
+          </Switch>
         </Router>
       </div>
     </div>
   );
-}
+};
 
 export default App;
