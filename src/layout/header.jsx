@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import headerDesktopImg from "../icons/headerDesktopImg.svg";
-import NavBar from "./NavBar";
+import NavBar from "./navBar";
 
 const Header = () => {
   return (

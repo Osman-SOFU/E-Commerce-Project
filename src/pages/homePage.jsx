@@ -2,8 +2,8 @@
 
 import Header from "../layout/header";
 import PageContent from "../layout/pageContent";
-import Footer from "../layout/Footer";
-import Client from "../layout/Client";
+import Footer from "../layout/footer";
+import Client from "../layout/client";
 import Features from "../layout/features";
 import Blog from "../layout/blog";
 import Product from "../layout/product";
