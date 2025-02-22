@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import productData from "../data/productData";
-import ProductInfoSection from "../layout/ProductInfoSection";
+import ProductInfoSection from "../layout/productInfoSection";
 
 const ProductDetailPage = () => {
   const [selectedImage, setSelectedImage] = useState(0);
