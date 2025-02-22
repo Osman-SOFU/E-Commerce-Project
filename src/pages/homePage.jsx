@@ -11,7 +11,7 @@ import Shop from "../layout/shop";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="font-[Montserrat]">
       <Header />
       <Client />
       <Shop />

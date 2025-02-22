@@ -1,6 +1,17 @@
+import { useHistory } from "react-router-dom";
+
 const ProductCard = ({ product }) => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push(`/product/${product.id}`);
+  };
+
   return (
-    <div className="flex flex-col items-center flex-1 min-w-[250px] max-w-[295px] bg-white shadow-md p-4 rounded-lg">
+    <div
+      onClick={handleClick}
+      className="flex flex-col items-center flex-1 min-w-[250px] max-w-[295px] bg-white shadow-md p-4 rounded-lg"
+    >
       <img
         src={product.image}
         alt={product.title}

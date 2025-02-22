@@ -11,7 +11,7 @@ const Client = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full max-w-[1440px] mx-auto py-10 px-4 sm:px-6 lg:px-8 ">
+    <div className="flex flex-col items-center w-full max-w-[1440px] mx-auto py-10 px-4 sm:px-6 lg:px-8 mt-10">
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-6 gap-10 w-full max-w-[1200px] items-center justify-center">
         <img
           className="mx-auto h-12"

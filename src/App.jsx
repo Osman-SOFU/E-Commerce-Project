@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import HomePage from "./pages/homePage.jsx";
 import ShopPage from "./pages/shopPage";
+import ProductDetailPage from "./pages/productDetailPage.jsx";
 
 const App = () => {
   // useEffect ile sayfa yüklendiğinde toast göstermek
@@ -24,6 +25,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/shop" component={ShopPage} />
+            <Route path="/product/:productId" component={ProductDetailPage} />
           </Switch>
         </Router>
       </div>
