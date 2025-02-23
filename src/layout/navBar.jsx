@@ -62,9 +62,9 @@ const NavBar = () => {
           <a href="#" className="hover:text-black">
             Blog
           </a>
-          <a href="#" className="hover:text-black">
+          <Link to="/contact" className="hover:text-black">
             Contact
-          </a>
+          </Link>
           <a href="#" className="hover:text-black">
             Pages
           </a>
