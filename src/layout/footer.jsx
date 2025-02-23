@@ -27,7 +27,7 @@ const Footer = () => {
             <h3 className="font-semibold text-[#252B42] mb-2">Company Info</h3>
             <ul className="space-y-1 text-[#737373]">
               <li>
-                <a href="#">About Us</a>
+                <a href="/about-us">About Us</a>
               </li>
               <li>
                 <a href="#">Carrier</a>
@@ -46,7 +46,7 @@ const Footer = () => {
             <h3 className="font-semibold text-[#252B42] mb-2">Legal</h3>
             <ul className="space-y-1 text-[#737373]">
               <li>
-                <a href="#">About Us</a>
+                <a href="/about-us">About Us</a>
               </li>
               <li>
                 <a href="#">Carrier</a>
