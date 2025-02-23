@@ -10,6 +10,7 @@ import HomePage from "./pages/homePage.jsx";
 import ShopPage from "./pages/shopPage";
 import ProductDetailPage from "./pages/productDetailPage.jsx";
 import ContactPage from "./pages/contactPage";
+import TeamPage from "./pages/teamPage.jsx";
 
 const App = () => {
   // useEffect ile sayfa yüklendiğinde toast göstermek
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/shop" component={ShopPage} />
             <Route path="/product/:productId" component={ProductDetailPage} />
             <Route path="/contact" component={ContactPage} />
+            <Route path="/team" component={TeamPage} />
           </Switch>
         </Router>
       </div>

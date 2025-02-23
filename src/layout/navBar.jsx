@@ -56,9 +56,9 @@ const NavBar = () => {
             Shop
             <img src={headerVector} alt="Dropdown" className="w-3 h-3 ml-1" />
           </Link>
-          <a href="#" className="hover:text-black">
+          <Link to="/team" className="hover:text-black">
             About
-          </a>
+          </Link>
           <a href="#" className="hover:text-black">
             Blog
           </a>
