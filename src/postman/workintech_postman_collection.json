@@ -1,0 +1,68 @@
+{
+  "info": {
+    "name": "WorkinTech E-Commerce API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Roles",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/roles",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["roles"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Signup User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "\n                    {\n                        \"name\": \"John Doe\",\n                        \"email\": \"johndoe@example.com\",\n                        \"password\": \"Test@1234\",\n                        \"role_id\": 1\n                    }\n                    "
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/signup",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["signup"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Signup Store",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "\n                    {\n                        \"name\": \"Test Store\",\n                        \"email\": \"store@example.com\",\n                        \"password\": \"Store@1234\",\n                        \"role_id\": 2,\n                        \"store\": {\n                            \"name\": \"My Store\",\n                            \"phone\": \"05551234567\",\n                            \"tax_no\": \"T1234V567890\",\n                            \"bank_account\": \"TR123456789012345678901234\"\n                        }\n                    }\n                    "
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/signup",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["signup"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

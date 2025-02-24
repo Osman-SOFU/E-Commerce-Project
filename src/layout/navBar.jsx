@@ -1,28 +1,33 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { User, Search, ShoppingCart, Menu } from "lucide-react";
-import headerVector from "../icons/headerVector.svg";
-import headerUser from "../icons/headerUser.svg";
-import headerShoppingCard from "../icons/headerShoppingCard.svg";
-import headerFavori from "../icons/headerFavori.svg";
-import phone from "../icons/phone.svg";
-import mail from "../icons/mail.svg";
-import instagram from "../icons/instagram.svg";
-import youtube from "../icons/youtube.svg";
-import facebook from "../icons/facebook.svg";
-import twitter from "../icons/twitter.svg";
+import { Icon } from "@iconify/react";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const history = useHistory();
+
+  useEffect(() => {
+    // Check if user is logged in
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      setUser(JSON.parse(loggedInUser));
+    }
+  }, []);
+
+  const handleLoginClick = () => {
+    history.push("/signup");
+  };
 
   return (
     <>
       {/* Üst Menü - Masaüstü Görünüm */}
       <div className="hidden lg:flex justify-between items-center px-6 py-3 bg-gray-900 text-white text-sm">
         <div className="flex items-center space-x-4">
-          <img src={phone} alt="Phone" className="w-4 h-4" />
+          <Icon icon="mdi:phone" className="w-4 h-4" />
           <span>(225) 555-0118</span>
-          <img src={mail} alt="Mail" className="w-4 h-4" />
+          <Icon icon="mdi:email" className="w-4 h-4" />
           <span>michelle.rivera@example.com</span>
         </div>
         <div>
@@ -30,18 +35,10 @@ const NavBar = () => {
         </div>
         <div className="flex items-center space-x-4">
           <span>Bizi Takip Edin: </span>
-          <img
-            src={instagram}
-            alt="Instagram"
-            className="w-5 h-5 cursor-pointer"
-          />
-          <img src={youtube} alt="YouTube" className="w-5 h-5 cursor-pointer" />
-          <img
-            src={facebook}
-            alt="Facebook"
-            className="w-5 h-5 cursor-pointer"
-          />
-          <img src={twitter} alt="Twitter" className="w-5 h-5 cursor-pointer" />
+          <Icon icon="mdi:instagram" className="w-5 h-5 cursor-pointer" />
+          <Icon icon="mdi:youtube" className="w-5 h-5 cursor-pointer" />
+          <Icon icon="mdi:facebook" className="w-5 h-5 cursor-pointer" />
+          <Icon icon="mdi:twitter" className="w-5 h-5 cursor-pointer" />
         </div>
       </div>
 
@@ -54,7 +51,7 @@ const NavBar = () => {
           </Link>
           <Link to="/shop" className="hover:text-black flex items-center">
             Shop
-            <img src={headerVector} alt="Dropdown" className="w-3 h-3 ml-1" />
+            <Icon icon="mdi:chevron-down" className="w-3 h-3 ml-1" />
           </Link>
           <Link to="/team" className="hover:text-black">
             About
@@ -70,22 +67,21 @@ const NavBar = () => {
           </a>
         </div>
         <div className="hidden lg:flex items-center space-x-4 text-blue-500">
-          <img src={headerUser} alt="User" className="w-6 h-6 cursor-pointer" />
-          <span className="cursor-pointer">Login / Register</span>
+          {user ? (
+            <span className="cursor-pointer">{user.name}</span>
+          ) : (
+            <Icon
+              icon="mdi:user"
+              className="w-6 h-6 cursor-pointer"
+              onClick={handleLoginClick}
+            />
+          )}
           <Search className="w-6 h-6 cursor-pointer" />
-          <img
-            src={headerShoppingCard}
-            alt="Shopping Cart"
-            className="w-14 h-14 cursor-pointer"
-          />
-          <img
-            src={headerFavori}
-            alt="Favorites"
-            className="w-14 h-14 cursor-pointer"
-          />
+          <Icon icon="mdi:cart" className="w-6 h-6 cursor-pointer" />
+          <Icon icon="mdi:heart" className="w-6 h-6 cursor-pointer" />
         </div>
         <div className="lg:hidden flex items-center space-x-4">
-          <User className="w-6 h-6 cursor-pointer" />
+          <User className="w-6 h-6 cursor-pointer" onClick={handleLoginClick} />
           <Search className="w-6 h-6 cursor-pointer" />
           <ShoppingCart className="w-6 h-6 cursor-pointer" />
           <Menu
