@@ -1,10 +1,13 @@
 // src/redux/reducers/index.js
 import { combineReducers } from "redux";
-import counterReducer from "./counterReducer";
-// Burada farklı reducer'ları birleştiriyoruz
+import clientReducer from "./clientReducer";
+import productReducer from "./productReducer";
+import shoppingCartReducer from "./shoppingCartReducer";
+
 const rootReducer = combineReducers({
-  counter: counterReducer,
-  // reducer'ları buraya ekleyeceksin
+  client: clientReducer,
+  product: productReducer,
+  shoppingCart: shoppingCartReducer,
 });
 
 export default rootReducer;
