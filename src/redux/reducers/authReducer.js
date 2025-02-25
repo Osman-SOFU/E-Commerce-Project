@@ -3,6 +3,7 @@ import {
   loginUser,
   logoutUser,
   loadUserFromLocalStorage,
+  verifyToken,
 } from "../actions/authActions";
 
 const authSlice = createSlice({
@@ -14,6 +15,14 @@ const authSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(verifyToken.fulfilled, (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+    });
+    builder.addCase(verifyToken.rejected, (state) => {
+      state.user = null;
+      state.token = null;
+    });
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;

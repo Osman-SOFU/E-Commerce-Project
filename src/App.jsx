@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loadUserFromLocalStorage } from "./redux/actions/authActions";
 
+import { verifyToken } from "./redux/actions/authActions";
+
 import HomePage from "./pages/homePage.jsx";
 import ShopPage from "./pages/shopPage";
 import ProductDetailPage from "./pages/productDetailPage.jsx";
@@ -26,6 +28,10 @@ const App = () => {
     toast.success("Sayfa başarıyla yüklendi!");
     // Kullanıcı bilgilerini localStorage'dan yükle
     dispatch(loadUserFromLocalStorage());
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(verifyToken()); // Header'a otomatik eklenecek
+    }
   }, [dispatch]); // Boş bir array, sayfa yüklendiğinde sadece bir kere çalışmasını sağlar.
 
   return (
