@@ -1,24 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { User, Search, ShoppingCart, Menu } from "lucide-react";
 import { Icon } from "@iconify/react";
+import { useSelector, useDispatch } from "react-redux";
+import md5 from "md5";
+import { logoutUser } from "../redux/actions/authActions";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
   const history = useHistory();
-
-  useEffect(() => {
-    // Check if user is logged in
-    const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
-      setUser(JSON.parse(loggedInUser));
-    }
-  }, []);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
 
   const handleLoginClick = () => {
+    history.push("/login");
+  };
+
+  const handleSignUpClick = () => {
     history.push("/signup");
   };
+
+  const handleLogoutClick = () => {
+    dispatch(logoutUser());
+    history.push("/login");
+  };
+
+  const gravatarUrl = user
+    ? `https://www.gravatar.com/avatar/${md5(user.email)}`
+    : "";
 
   return (
     <>
@@ -68,13 +77,34 @@ const NavBar = () => {
         </div>
         <div className="hidden lg:flex items-center space-x-4 text-blue-500">
           {user ? (
-            <span className="cursor-pointer">{user.name}</span>
+            <div className="flex items-center space-x-2">
+              <img
+                src={gravatarUrl}
+                alt="User Avatar"
+                className="w-8 h-8 rounded-full"
+              />
+              <span className="cursor-pointer">{user.name}</span>
+              <button
+                onClick={handleLogoutClick}
+                className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+              >
+                Logout
+              </button>
+            </div>
           ) : (
-            <Icon
-              icon="mdi:user"
-              className="w-6 h-6 cursor-pointer"
-              onClick={handleLoginClick}
-            />
+            <div className="flex items-center space-x-4">
+              <Icon
+                icon="mdi:user"
+                className="w-6 h-6 cursor-pointer"
+                onClick={handleLoginClick}
+              />
+              <button
+                onClick={handleSignUpClick}
+                className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
+              >
+                Sign Up
+              </button>
+            </div>
           )}
           <Search className="w-6 h-6 cursor-pointer" />
           <Icon icon="mdi:cart" className="w-6 h-6 cursor-pointer" />
@@ -97,15 +127,21 @@ const NavBar = () => {
           <Link to="/" className="text-gray-700">
             Home
           </Link>
-          <a href="#" className="text-gray-700">
+          <Link to="/product/:productId" className="text-gray-700">
             Product
-          </a>
+          </Link>
           <a href="#" className="text-gray-700">
             Pricing
           </a>
           <a href="#" className="text-gray-700">
             Contact
           </a>
+          <button
+            onClick={handleSignUpClick}
+            className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
+          >
+            Sign Up
+          </button>
         </div>
       )}
     </>
