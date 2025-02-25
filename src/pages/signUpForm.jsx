@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,10 +18,12 @@ const SignUpForm = () => {
     setValue,
     formState: { errors },
   } = useForm();
+
   const [roles, setRoles] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoadingRoles, setIsLoadingRoles] = useState(true); // 🔑 Roller yüklenirken kontrol
+  const [isLoadingRoles, setIsLoadingRoles] = useState(true);
   const history = useHistory();
+
   const selectedRoleId = watch("role_id");
 
   useEffect(() => {
@@ -29,26 +31,27 @@ const SignUpForm = () => {
       try {
         const { data } = await api.get("/roles");
         setRoles(data);
-        const customerRole = data.find(
-          (role) => role.name.toLowerCase() === "customer"
-        );
-        if (customerRole) setValue("role_id", customerRole.id); // Customer varsayılan olarak atanır
+
+        // Varsayılan olarak 'customer' rolünü seç
+        const customerRole = data.find((role) => role.code === "customer");
+        if (customerRole) setValue("role_id", customerRole.id);
       } catch {
         toast.error("Failed to fetch roles.");
       } finally {
-        setIsLoadingRoles(false); // 🎯 Roller yüklendi
+        setIsLoadingRoles(false);
       }
     };
+
     fetchRoles();
   }, [setValue]);
 
-  const storeRole = roles.find((role) => role.name.toLowerCase() === "store");
+  const storeRole = roles.find((role) => role.code === "store");
 
   const onSubmit = async (values) => {
     setIsSubmitting(true);
     const { confirmPassword, ...formData } = values;
 
-    if (selectedRoleId === storeRole?.id) {
+    if (values.role_id === String(storeRole?.id)) {
       formData.store = {
         name: values["store.name"],
         phone: values["store.phone"],
@@ -62,16 +65,12 @@ const SignUpForm = () => {
       toast.success("Check your email to activate your account.");
       history.goBack();
     } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-          "Signup failed. Please check your input."
-      );
+      toast.error(error.response?.data?.message || "Signup failed.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // 🛡️ Roller yüklenene kadar form gösterilmez
   if (isLoadingRoles) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -90,29 +89,27 @@ const SignUpForm = () => {
           Sign Up
         </h2>
 
-        {/* 🎯 Role Selection */}
+        {/* Role Selection */}
         <div className="mb-5">
           <label className="block text-gray-700 font-semibold mb-2">Role</label>
           <select
             {...register("role_id", { required: "Role is required." })}
-            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border rounded-lg p-3"
             onChange={(e) => setValue("role_id", e.target.value)}
             value={selectedRoleId || ""}
           >
             {roles.map((role) => (
               <option key={role.id} value={role.id}>
-                {roleNames[role.name.toLowerCase()] || role.name}
+                {roleNames[role.code] || role.name}
               </option>
             ))}
           </select>
           {errors.role_id && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.role_id.message}
-            </p>
+            <p className="text-red-500 text-sm">{errors.role_id.message}</p>
           )}
         </div>
 
-        {/* 📝 Common Fields */}
+        {/* Common Fields */}
         <div className="mb-4">
           <input
             placeholder="Name"
@@ -120,10 +117,10 @@ const SignUpForm = () => {
               required: "Name is required.",
               minLength: { value: 3, message: "Min 3 characters." },
             })}
-            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border rounded-lg p-3"
           />
           {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            <p className="text-red-500 text-sm">{errors.name.message}</p>
           )}
         </div>
 
@@ -138,10 +135,10 @@ const SignUpForm = () => {
                 message: "Invalid email address.",
               },
             })}
-            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border rounded-lg p-3"
           />
           {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
           )}
         </div>
 
@@ -157,12 +154,10 @@ const SignUpForm = () => {
                 message: "Include uppercase, lowercase, number & special char.",
               },
             })}
-            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border rounded-lg p-3"
           />
           {errors.password && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.password.message}
-            </p>
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
           )}
         </div>
 
@@ -174,17 +169,17 @@ const SignUpForm = () => {
               validate: (value) =>
                 value === watch("password") || "Passwords do not match.",
             })}
-            className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full border rounded-lg p-3"
           />
           {errors.confirmPassword && (
-            <p className="text-red-500 text-sm mt-1">
+            <p className="text-red-500 text-sm">
               {errors.confirmPassword.message}
             </p>
           )}
         </div>
 
-        {/* 🏬 Store-specific Fields */}
-        {selectedRoleId === storeRole?.id && (
+        {/* Store Fields */}
+        {selectedRoleId === String(storeRole?.id) && (
           <div className="mb-6 space-y-4">
             <div>
               <label>Store Name:</label>
