@@ -1,16 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { User, Search, ShoppingCart, Menu } from "lucide-react";
 import { Icon } from "@iconify/react";
 import { useSelector, useDispatch } from "react-redux";
 import md5 from "md5";
-import { logoutUser } from "../redux/actions/authActions";
+import {
+  logoutUser,
+  loadUserFromLocalStorage,
+} from "../redux/actions/authActions";
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
+
+  const user = useSelector((state) => state.auth.user); // Redux state'inden user al
+
+  useEffect(() => {
+    console.log("NavBar user from Redux:", user); // ✅ Kontrol
+  }, [user]);
+
+  useEffect(() => {
+    dispatch(loadUserFromLocalStorage());
+  }, [dispatch]); // user kaldırıldı
 
   const handleLoginClick = () => {
     history.push("/login");
@@ -102,7 +114,7 @@ const NavBar = () => {
                 onClick={handleSignUpClick}
                 className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
               >
-                Sign Up
+                Register{" "}
               </button>
             </div>
           )}
@@ -136,12 +148,37 @@ const NavBar = () => {
           <a href="#" className="text-gray-700">
             Contact
           </a>
-          <button
-            onClick={handleSignUpClick}
-            className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
-          >
-            Sign Up
-          </button>
+          {user ? (
+            <div className="flex flex-col items-center">
+              <img
+                src={gravatarUrl}
+                alt="User Avatar"
+                className="w-12 h-12 rounded-full"
+              />
+              <span className="mt-2">{user.name}</span>
+              <button
+                onClick={handleLogoutClick}
+                className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 mt-2"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center space-y-2">
+              <button
+                onClick={handleLoginClick}
+                className="text-blue-500 text-lg"
+              >
+                Login
+              </button>
+              <button
+                onClick={handleSignUpClick}
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              >
+                Register
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>

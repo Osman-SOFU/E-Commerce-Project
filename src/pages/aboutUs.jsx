@@ -1,5 +1,3 @@
-import NavBar from "../layout/navBar";
-import Footer from "../layout/footer";
 import Client from "../layout/client";
 import TeamSection from "../components/teamSection";
 import AboutUsPageHeader from "../layout/aboutUsPageHeader";
@@ -9,7 +7,6 @@ import AboutUsFooter from "../layout/aboutUsFooter";
 const AboutUs = () => {
   return (
     <div>
-      <NavBar />
       <AboutUsPageHeader />
       <CombinedAboutUsPage />
       <TeamSection />
@@ -27,7 +24,6 @@ const AboutUs = () => {
 
       <Client />
       <AboutUsFooter />
-      <Footer />
     </div>
   );
 };

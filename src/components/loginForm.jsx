@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginUser } from "../redux/actions/authActions";
+import { loginUser, verifyToken } from "../redux/actions/authActions";
 
 const LoginForm = () => {
   const {
@@ -15,15 +15,18 @@ const LoginForm = () => {
 
   const onSubmit = (data) => {
     dispatch(loginUser(data))
-      .then((response) => {
-        if (response.payload.success) {
+      .then(async (response) => {
+        if (response.payload?.token) {
           toast.success("Login successful!");
-          history.goBack() || history.push("/");
+          console.log("Login token:", response.payload.token); // Kontrol için ekleyin
+          await dispatch(verifyToken()); // Doğrulama yap
+          history.push("/");
         } else {
           toast.error("Login failed!");
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("Login error:", err); // Hata kontrolü
         toast.error("Login failed!");
       });
   };

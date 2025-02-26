@@ -16,6 +16,7 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(verifyToken.fulfilled, (state, action) => {
+      console.log("Reducer verifyToken payload:", action.payload); // ✅ Kontrol
       state.user = action.payload.user;
       state.token = action.payload.token;
     });
@@ -24,6 +25,7 @@ const authSlice = createSlice({
       state.token = null;
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
+      console.log("Reducer loginUser payload:", action.payload); // ✅ Kontrol
       state.user = action.payload.user;
       state.token = action.payload.token;
     });
@@ -34,16 +36,16 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.error = null;
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+      //localStorage.removeItem("token");
+      //localStorage.removeItem("user");
     });
-    builder.addCase(loadUserFromLocalStorage, (state) => {
-      const token = localStorage.getItem("token");
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (token && user) {
-        state.token = token;
-        state.user = user;
-      }
+    builder.addCase(loadUserFromLocalStorage.fulfilled, (state, action) => {
+      state.token = action.payload.token;
+      state.user = action.payload.user;
+    });
+    builder.addCase(loadUserFromLocalStorage.rejected, (state, action) => {
+      state.token = null;
+      state.user = null;
     });
   },
 });

@@ -1,5 +1,3 @@
-import NavBar from "../layout/navBar";
-import Footer from "../layout/footer";
 import Client from "../layout/client";
 import ShopPageCard from "../components/shopPageCard";
 import FilterRowWithProducts from "../layout/filterRowWithProducts";
@@ -9,7 +7,6 @@ import { Link } from "react-router-dom";
 const ShopPage = () => {
   return (
     <>
-      <NavBar />
       <div className="font-[Montserrat]">
         <div className="w-full max-w-[1440px] mx-auto p-4 sm:px-6 lg:px-8 font-[Montserrat]">
           <div className="mt-8 flex justify-between items-center">
@@ -31,7 +28,6 @@ const ShopPage = () => {
         <ShopPageCard />
         <FilterRowWithProducts />
         <Client />
-        <Footer />
       </div>
     </>
   );

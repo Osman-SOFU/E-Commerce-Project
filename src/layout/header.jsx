@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
 import headerDesktopImg from "../icons/headerDesktopImg.svg";
-import NavBar from "./navBar";
 
 const Header = () => {
   return (
     <>
-      <NavBar />
       <header className="w-full max-w-[1440px] mx-auto p-4 sm:px-6 lg:px-8 ">
         {/* Banner Bölümü */}
         <div className="relative w-full max-w-[1360px] mx-auto bg-gradient-to-b from-blue-300 to-teal-300 p-10 lg:flex lg:items-center lg:justify-between rounded-2xl shadow-md">

@@ -1,66 +1,49 @@
 import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import api from "../../services/api.js";
-const fakeApiCall = (userData) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const users = [
-        {
-          email: "customer@commerce.com",
-          password: "123456",
-          name: "Customer",
-        },
-        { email: "store@commerce.com", password: "123456", name: "Store" },
-        { email: "admin@commerce.com", password: "123456", name: "Admin" },
-      ];
 
-      const user = users.find(
-        (u) => u.email === userData.email && u.password === userData.password
-      );
-
-      if (user) {
-        resolve({ success: true, token: "fake-jwt-token", user });
-      } else {
-        reject({ success: false, message: "Invalid credentials" });
-      }
-    }, 1000);
-  });
-};
-
-// authActions.js
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await api.post("/login", userData); // Gerçek API çağrısı
-      const { token, user } = response.data;
+      const response = await api.post("/login", userData);
+      console.log("Login API Response:", response.data);
 
-      if (userData.rememberMe) {
-        localStorage.setItem("token", token); // Token'ı kaydet
+      const { token, name, email, role_id } = response.data;
+      const user = { name, email, role_id }; // ✅ user objesi oluştur
+
+      if (userData.rememberMe && token) {
+        localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
       }
 
-      return { user, token };
+      return { user, token }; // ✅ user ve token dön
     } catch (error) {
+      console.error("Login error:", error.response?.data);
       return rejectWithValue(error.response?.data || "Login failed.");
     }
   }
 );
 
-// authActions.js
 export const verifyToken = createAsyncThunk(
   "auth/verifyToken",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get("/verify"); // Header'da token olacak
-      const { user, token } = response.data;
+      const token = localStorage.getItem("token");
+      const response = await api.get("/verify", {
+        headers: { Authorization: token },
+      });
 
-      localStorage.setItem("token", token); // Token yenile
+      console.log("Verify API Response:", response.data);
+
+      const { name, email, role_id, token: newToken } = response.data;
+      const user = { name, email, role_id }; // ✅ user oluştur
+
+      localStorage.setItem("token", newToken);
       localStorage.setItem("user", JSON.stringify(user));
 
-      return { user, token };
+      return { user, token: newToken };
     } catch (error) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+      console.error("Token verification failed:", error.response?.data);
       return rejectWithValue(error.response?.data || "Verification failed.");
     }
   }
@@ -68,6 +51,19 @@ export const verifyToken = createAsyncThunk(
 
 export const logoutUser = createAction("auth/logoutUser");
 
-export const loadUserFromLocalStorage = createAction(
-  "auth/loadUserFromLocalStorage"
+export const loadUserFromLocalStorage = createAsyncThunk(
+  "auth/loadUserFromLocalStorage",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (token && user) {
+        return { token, user };
+      } else {
+        throw new Error("No user found in local storage");
+      }
+    } catch (error) {
+      return rejectWithValue("Error loading user from local storage");
+    }
+  }
 );

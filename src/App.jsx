@@ -18,6 +18,8 @@ import TeamPage from "./pages/teamPage.jsx";
 import AboutUs from "./pages/aboutUs.jsx";
 import SignUpForm from "./pages/signUpForm.jsx";
 import LoginForm from "./components/loginForm.jsx";
+import NavBar from "./components/navBar.jsx";
+import Footer from "./components/footer.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -39,6 +41,7 @@ const App = () => {
       <ToastContainer />
       <div className="flex flex-col">
         <Router>
+          <NavBar /> {/* Router içinde olmalı */}
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/shop" component={ShopPage} />
@@ -49,6 +52,7 @@ const App = () => {
             <Route path="/signup" component={SignUpForm} />
             <Route path="/login" component={LoginForm} />
           </Switch>
+          <Footer />
         </Router>
       </div>
     </div>
