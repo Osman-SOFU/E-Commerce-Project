@@ -9,7 +9,7 @@ import {
   loadUserFromLocalStorage,
 } from "../redux/actions/authActions";
 
-const NavBar = () => {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -185,4 +185,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Header;
