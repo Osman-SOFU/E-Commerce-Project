@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { User, Search, ShoppingCart, Menu } from "lucide-react";
 import { Icon } from "@iconify/react";
@@ -8,13 +8,17 @@ import {
   logoutUser,
   loadUserFromLocalStorage,
 } from "../redux/actions/authActions";
+import { fetchCategories } from "../redux/actions/categoryActions";
+import { slugify } from "../utils/slugify";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
+  const menuRef = useRef(null);
 
   const user = useSelector((state) => state.auth.user); // Redux state'inden user al
+  const { categories } = useSelector((state) => state.categories);
 
   useEffect(() => {
     console.log("NavBar user from Redux:", user); // ✅ Kontrol
@@ -22,7 +26,8 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(loadUserFromLocalStorage());
-  }, [dispatch]); // user kaldırıldı
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   const handleLoginClick = () => {
     history.push("/login");
@@ -40,6 +45,23 @@ const Header = () => {
   const gravatarUrl = user
     ? `https://www.gravatar.com/avatar/${md5(user.email)}`
     : "";
+
+  // Kadın ve Erkek Kategorilerini Filtreleme
+  const womenCategories = categories.filter((cat) => cat.gender === "k");
+  const menCategories = categories.filter((cat) => cat.gender === "e");
+
+  // Sayfa dışına tıklanınca menüyü kapatma
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -70,10 +92,70 @@ const Header = () => {
           <Link to="/" className="hover:text-black">
             Home
           </Link>
-          <Link to="/shop" className="hover:text-black flex items-center">
-            Shop
-            <Icon icon="mdi:chevron-down" className="w-3 h-3 ml-1" />
-          </Link>
+
+          {/* Shop Link & Chevron İle Açılır Menü */}
+          <div className="relative space-x-1">
+            <Link to="/shop" className="hover:text-black">
+              Shop
+            </Link>
+
+            <button
+              className="focus:outline-none"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <Icon icon="mdi:chevron-down" className="w-4 h-4" />
+            </button>
+
+            {/* Açılır Menü */}
+            {menuOpen && (
+              <div
+                ref={menuRef}
+                className="absolute left-0 mt-2 w-[400px] bg-white shadow-lg rounded-md z-50 p-4"
+              >
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Kadın Kategorileri */}
+                  <div>
+                    <h3 className="text-lg font-bold border-b pb-1">Kadın</h3>
+                    <ul className="mt-2 space-y-1">
+                      {womenCategories.map((category) => (
+                        <li key={category.id}>
+                          <Link
+                            to={`/shop/kadin/${slugify(category.title)}/${
+                              category.id
+                            }`}
+                            className="block px-2 py-1 text-gray-700 hover:bg-gray-200 rounded"
+                            onClick={() => setMenuOpen(false)}
+                          >
+                            {category.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Erkek Kategorileri */}
+                  <div>
+                    <h3 className="text-lg font-bold border-b pb-1">Erkek</h3>
+                    <ul className="mt-2 space-y-1">
+                      {menCategories.map((category) => (
+                        <li key={category.id}>
+                          <Link
+                            to={`/shop/erkek/${slugify(category.title)}/${
+                              category.id
+                            }`}
+                            className="block px-2 py-1 text-gray-700 hover:bg-gray-200 rounded"
+                            onClick={() => setMenuOpen(false)}
+                          >
+                            {category.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
           <Link to="/team" className="hover:text-black">
             About
           </Link>

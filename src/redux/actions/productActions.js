@@ -1,11 +1,8 @@
+import api from "../../services/api";
+
 export const setCategories = (categories) => ({
   type: "SET_CATEGORIES",
   payload: categories,
-});
-
-export const setProductList = (productList) => ({
-  type: "SET_PRODUCT_LIST",
-  payload: productList,
 });
 
 export const setTotal = (total) => ({
@@ -32,3 +29,12 @@ export const setFilter = (filter) => ({
   type: "SET_FILTER",
   payload: filter,
 });
+
+export const fetchProductsByCategory = (categoryId) => async (dispatch) => {
+  try {
+    const response = await api.get(`/products?category_id=${categoryId}`);
+    dispatch({ type: "SET_PRODUCT_LIST", payload: response.data.products });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+};

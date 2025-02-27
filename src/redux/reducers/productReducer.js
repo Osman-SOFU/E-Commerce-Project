@@ -13,7 +13,11 @@ const productReducer = (state = initialState, action) => {
     case "SET_CATEGORIES":
       return { ...state, categories: action.payload };
     case "SET_PRODUCT_LIST":
-      return { ...state, productList: action.payload };
+      return {
+        ...state,
+        productList: Array.isArray(action.payload) ? action.payload : [],
+      };
+
     case "SET_TOTAL":
       return { ...state, total: action.payload };
     case "SET_FETCH_STATE":
