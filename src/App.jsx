@@ -32,8 +32,7 @@ const App = () => {
     dispatch(loadUserFromLocalStorage());
     const token = localStorage.getItem("token");
     if (token) {
-      console.log("Token bulundu, ancak doğrulama isteği yapılmayacak.");
-      //dispatch(verifyToken()); // Header'a otomatik eklenecek
+      dispatch(verifyToken()); // Header'a otomatik eklenecek
     }
   }, [dispatch]); // Boş bir array, sayfa yüklendiğinde sadece bir kere çalışmasını sağlar.
 
@@ -46,6 +45,10 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/shop" component={ShopPage} />
+            <Route
+              path="/shop/:gender/:categoryName/:categoryId"
+              component={ShopPage}
+            />
             <Route path="/product/:productId" component={ProductDetailPage} />
             <Route path="/contact" component={ContactPage} />
             <Route path="/team" component={TeamPage} />
