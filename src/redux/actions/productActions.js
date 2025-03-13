@@ -1,34 +1,20 @@
 import api from "../../services/api";
 
-export const setCategories = (categories) => ({
-  type: "SET_CATEGORIES",
-  payload: categories,
-});
+// Ürünleri yükleme action'ı
+export const fetchProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: "SET_FETCH_STATE", payload: "LOADING" });
 
-export const setTotal = (total) => ({
-  type: "SET_TOTAL",
-  payload: total,
-});
+    const response = await api.get("/products"); // API'ye istek
+    dispatch({ type: "SET_PRODUCT_LIST", payload: response.data.products });
+    dispatch({ type: "SET_TOTAL", payload: response.data.total });
 
-export const setFetchState = (fetchState) => ({
-  type: "SET_FETCH_STATE",
-  payload: fetchState,
-});
-
-export const setLimit = (limit) => ({
-  type: "SET_LIMIT",
-  payload: limit,
-});
-
-export const setOffset = (offset) => ({
-  type: "SET_OFFSET",
-  payload: offset,
-});
-
-export const setFilter = (filter) => ({
-  type: "SET_FILTER",
-  payload: filter,
-});
+    dispatch({ type: "SET_FETCH_STATE", payload: "SUCCESS" });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    dispatch({ type: "SET_FETCH_STATE", payload: "ERROR" });
+  }
+};
 
 export const fetchProductsByCategory = (categoryId) => async (dispatch) => {
   try {

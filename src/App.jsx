@@ -32,7 +32,8 @@ const App = () => {
     dispatch(loadUserFromLocalStorage());
     const token = localStorage.getItem("token");
     if (token) {
-      dispatch(verifyToken()); // Header'a otomatik eklenecek
+      console.log("Token bulundu, ancak doğrulama isteği yapılmayacak.");
+      //dispatch(verifyToken()); // Header'a otomatik eklenecek
     }
   }, [dispatch]); // Boş bir array, sayfa yüklendiğinde sadece bir kere çalışmasını sağlar.
 

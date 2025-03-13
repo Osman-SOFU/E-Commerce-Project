@@ -21,6 +21,7 @@ const authSlice = createSlice({
       state.token = action.payload.token;
     });
     builder.addCase(verifyToken.rejected, (state) => {
+      console.warn("Token doğrulama başarısız oldu, kullanıcı çıkış yapıldı.");
       state.user = null;
       state.token = null;
     });

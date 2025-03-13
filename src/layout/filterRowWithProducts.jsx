@@ -1,25 +1,38 @@
-import { useState } from "react";
-import { products } from "../data/products";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../redux/actions/productActions";
 import ProductCard from "../components/productCard";
 import { Grid, List } from "lucide-react";
 
 const FilterRowWithProducts = () => {
+  const dispatch = useDispatch();
+
+  // 🔥 Redux Store'dan Ürünleri Çekiyoruz!
+  const { productList } = useSelector((state) => state.product);
+
   const [view, setView] = useState("grid");
   const [sortOption, setSortOption] = useState("popularity");
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 12;
-  const totalPages = Math.ceil(products.length / productsPerPage);
 
-  const sortedProducts = [...products].sort((a, b) => {
-    if (sortOption === "price-low-high") return a.newPrice - b.newPrice;
-    if (sortOption === "price-high-low") return b.newPrice - a.newPrice;
+  useEffect(() => {
+    dispatch(fetchProducts()); // ✅ API’den ürünleri çekiyoruz.
+  }, [dispatch]);
+
+  // ✅ Ürünleri fiyat ve popülariteye göre sıralama
+  const sortedProducts = [...productList].sort((a, b) => {
+    if (sortOption === "price-low-high") return a.price - b.price;
+    if (sortOption === "price-high-low") return b.price - a.price;
     return 0;
   });
 
+  // ✅ Sayfalama (Pagination) Mantığı
   const paginatedProducts = sortedProducts.slice(
     (currentPage - 1) * productsPerPage,
     currentPage * productsPerPage
   );
+
+  const totalPages = Math.ceil(productList.length / productsPerPage);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) setCurrentPage(page);
@@ -80,51 +93,37 @@ const FilterRowWithProducts = () => {
       {/* Product Display */}
       {view === "grid" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
-          {paginatedProducts.map((product, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center p-4 rounded-lg"
-            >
-              <ProductCard product={product} />
-              <div className="flex gap-2 mt-4">
-                {colorOptions.map((color, idx) => (
-                  <button
-                    key={idx}
-                    className="w-5 h-5 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    style={{ backgroundColor: color }}
-                    onClick={() => alert(`Selected color: ${color}`)}
-                    aria-label={`Select color ${color}`}
-                  ></button>
-                ))}
-              </div>
-            </div>
+          {paginatedProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       ) : (
         <div className="flex flex-col gap-6 mt-8">
-          {paginatedProducts.map((product, index) => (
+          {paginatedProducts.map((product) => (
             <div
-              key={index}
+              key={product.id}
               className="flex flex-col sm:flex-row items-center gap-6 p-4 rounded-lg"
             >
               <img
-                src={product.image}
-                alt={product.title}
+                src={
+                  product.images?.[0]?.url || "https://via.placeholder.com/150"
+                }
+                alt={product.name}
                 className="w-[150px] h-[150px] object-cover rounded-md"
               />
               <div className="flex flex-col items-center sm:items-start">
                 <h3 className="text-gray-900 font-bold text-lg text-center sm:text-left">
-                  {product.title}
+                  {product.name}
                 </h3>
                 <p className="text-gray-500 text-sm text-center sm:text-left">
-                  {product.department}
+                  {product.description}
                 </p>
                 <div className="flex gap-2 mt-2">
                   <span className="text-gray-400 line-through">
-                    ${product.oldPrice}
+                    ${product.oldPrice || (product.price * 1.2).toFixed(2)}
                   </span>
                   <span className="text-green-500 font-bold">
-                    ${product.newPrice}
+                    ${product.price}
                   </span>
                 </div>
                 <div className="flex gap-2 mt-3">

@@ -1,13 +1,16 @@
 import { useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductCard from "../components/productCard";
-import { products } from "../data/products";
 
 const Product = () => {
   const [showSlider, setShowSlider] = useState(false);
   const sliderRef = useRef(null); // Slider'ı kontrol etmek için referans
+
+  // 🔥 Ürünleri Redux Store'dan çekiyoruz!
+  const { productList } = useSelector((state) => state.product);
 
   const sliderSettings = {
     dots: true,
@@ -52,7 +55,7 @@ const Product = () => {
 
       {/* Grid Layout for Products */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-        {products.slice(0, 10).map((product, index) => (
+        {productList.slice(0, 10).map((product, index) => (
           <ProductCard key={index} product={product} />
         ))}
       </div>
@@ -61,7 +64,7 @@ const Product = () => {
       {showSlider && (
         <div className="mt-6 w-full max-w-[1300px]" onWheel={handleWheel}>
           <Slider {...sliderSettings} ref={sliderRef}>
-            {products.slice(11).map((product, index) => (
+            {productList.slice(11).map((product, index) => (
               <ProductCard key={index} product={product} />
             ))}
           </Slider>

@@ -29,14 +29,14 @@ export const verifyToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await api.get("/verify", {
-        headers: { Authorization: token },
-      });
+      if (!token) throw new Error("No token found");
+
+      const response = await api.get("/verify"); // Token otomatik olarak header'a ekleniyor.
 
       console.log("Verify API Response:", response.data);
 
       const { name, email, role_id, token: newToken } = response.data;
-      const user = { name, email, role_id }; // ✅ user oluştur
+      const user = { name, email, role_id };
 
       localStorage.setItem("token", newToken);
       localStorage.setItem("user", JSON.stringify(user));
@@ -44,6 +44,11 @@ export const verifyToken = createAsyncThunk(
       return { user, token: newToken };
     } catch (error) {
       console.error("Token verification failed:", error.response?.data);
+
+      // ❌ Yetkisiz token ise localStorage'ı temizle
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
       return rejectWithValue(error.response?.data || "Verification failed.");
     }
   }
