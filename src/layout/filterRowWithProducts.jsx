@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { fetchProductsByCategory } from "../redux/actions/productActions";
+import { useParams, useLocation } from "react-router-dom";
+import {
+  fetchProducts,
+  fetchProductsByCategory,
+} from "../redux/actions/productActions";
 import ProductCard from "../components/productCard";
 
 const FilterRowWithProducts = () => {
   const dispatch = useDispatch();
   const { categoryId } = useParams();
+  const location = useLocation(); // 🔥 Mevcut URL bilgisini al
 
   const productList = useSelector((state) => state.product.productList);
 
@@ -14,15 +18,19 @@ const FilterRowWithProducts = () => {
   const [filterText, setFilterText] = useState("");
 
   useEffect(() => {
-    if (categoryId && productList.length === 0) {
+    if (location.pathname === "/shop") {
+      // 🔥 Eğer direkt shop sayfasındaysak, tüm ürünleri çek
+      dispatch(fetchProducts());
+    } else if (categoryId && productList.length === 0) {
+      // 🔥 Eğer kategori sayfasındaysak, ilgili kategoriyi çek
       dispatch(fetchProductsByCategory(categoryId));
     }
-  }, [dispatch, categoryId, productList.length]); // 🔥 Sadece `productList.length` değiştiğinde çalıştır
+  }, [dispatch, categoryId, productList.length, location.pathname]); // 🔥 location.pathname eklendi
 
   // 🔥 API'den gelen ürünleri seçili kategoriye göre filtrele
   const filteredProducts = productList.filter(
     (product) =>
-      product.category_id === parseInt(categoryId) &&
+      (!categoryId || product.category_id == categoryId) &&
       (product.name.toLowerCase().includes(filterText.toLowerCase()) ||
         product.description.toLowerCase().includes(filterText.toLowerCase()))
   );
