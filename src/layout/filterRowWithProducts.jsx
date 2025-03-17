@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 import {
   fetchProducts,
   fetchProductsByCategory,
@@ -13,19 +14,35 @@ const FilterRowWithProducts = () => {
   const location = useLocation(); // 🔥 Mevcut URL bilgisini al
 
   const productList = useSelector((state) => state.product.productList);
+  const totalProducts = useSelector((state) => state.product.total);
 
   const [sortOption, setSortOption] = useState("");
   const [filterText, setFilterText] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [productsPerPage] = useState(25);
 
   useEffect(() => {
+    const offset = currentPage * productsPerPage;
     if (location.pathname === "/shop") {
       // 🔥 Eğer direkt shop sayfasındaysak, tüm ürünleri çek
-      dispatch(fetchProducts());
+      dispatch(fetchProducts(`limit=${productsPerPage}&offset=${offset}`));
     } else if (categoryId && productList.length === 0) {
       // 🔥 Eğer kategori sayfasındaysak, ilgili kategoriyi çek
-      dispatch(fetchProductsByCategory(categoryId));
+      dispatch(
+        fetchProductsByCategory(
+          categoryId,
+          `limit=${productsPerPage}&offset=${offset}`
+        )
+      );
     }
-  }, [dispatch, categoryId, productList.length, location.pathname]); // 🔥 location.pathname eklendi
+  }, [
+    dispatch,
+    categoryId,
+    productList.length,
+    location.pathname,
+    currentPage,
+    productsPerPage,
+  ]); // 🔥 location.pathname eklendi
 
   // 🔥 API'den gelen ürünleri seçili kategoriye göre filtrele
   const filteredProducts = productList.filter(
@@ -43,6 +60,10 @@ const FilterRowWithProducts = () => {
     if (sortOption === "rating:desc") return b.rating - a.rating;
     return 0;
   });
+
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
+  };
 
   return (
     <div className="w-full max-w-[1440px] mx-auto px-4">
@@ -79,6 +100,27 @@ const FilterRowWithProducts = () => {
           <p className="text-center text-gray-500">No products found.</p>
         )}
       </div>
+
+      {/* Pagination */}
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        breakLabel={"..."}
+        pageCount={Math.ceil(totalProducts / productsPerPage)}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName="flex justify-center items-center space-x-2 mt-6"
+        pageClassName="border rounded-md px-4 py-2 hover:bg-gray-200"
+        pageLinkClassName="text-gray-700"
+        previousClassName="border rounded-md px-4 py-2 hover:bg-gray-200"
+        previousLinkClassName="text-gray-700"
+        nextClassName="border rounded-md px-4 py-2 hover:bg-gray-200"
+        nextLinkClassName="text-gray-700"
+        breakClassName="px-4 py-2"
+        activeClassName="bg-blue-500 text-white border-blue-500"
+        disabledClassName="opacity-50 cursor-not-allowed"
+      />
     </div>
   );
 };
