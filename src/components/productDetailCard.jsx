@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import productData from "../data/productData";
 import ProductInfoSection from "../layout/productInfoSection";
 
-const ProductDetailPage = () => {
+const ProductDetailCard = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const { images } = productData;
 
@@ -65,4 +65,4 @@ const ProductDetailPage = () => {
   );
 };
 
-export default ProductDetailPage;
+export default ProductDetailCard;

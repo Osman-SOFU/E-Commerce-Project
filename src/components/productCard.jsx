@@ -1,55 +1,36 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../redux/actions/productActions";
 import { useHistory } from "react-router-dom";
+import { slugify } from "../utils/slugify";
 
 const ProductCard = ({ product }) => {
-  const dispatch = useDispatch();
   const history = useHistory();
 
-  // Redux Store'dan Ürünleri Çek
-  const { fetchState } = useSelector((state) => state.product);
+  const handleCardClick = () => {
+    const category = product.category_id;
+    const gender = "unisex"; // Replace with actual gender data
+    const categoryName = "fashion"; // Replace with actual category name
+    const productNameSlug = slugify(product.name);
 
-  // API'den Ürünleri Çek
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
-
-  // Eğer ürünler yükleniyorsa
-  if (fetchState === "LOADING") {
-    return <div className="text-center text-xl">Loading...</div>;
-  }
-
-  // Eğer hata varsa
-  if (fetchState === "ERROR") {
-    return (
-      <div className="text-red-500 text-center">Failed to fetch products.</div>
+    history.push(
+      `/shop/${gender}/${categoryName}/${category}/${productNameSlug}/${product.id}`
     );
-  }
+  };
 
   return (
     <div
-      onClick={() => history.push(`/product/${product.id}`)}
-      className="flex flex-col items-center flex-1 min-w-[250px] max-w-[295px] bg-white shadow-md p-4 rounded-lg"
+      onClick={handleCardClick}
+      className="flex flex-col items-center flex-1 min-w-[250px] max-w-[295px] bg-white shadow-md p-4 rounded-lg cursor-pointer hover:shadow-lg transition-shadow hover:scale-105"
     >
-      {/* Ürün Resmi */}
       <img
         src={product.images?.[0]?.url || "https://via.placeholder.com/295"}
-        alt={product.name || "Ürün"}
+        alt={product.name || "Product"}
         className="w-full h-[360px] object-cover rounded-lg"
       />
-
-      {/* Ürün İsmi */}
       <h3 className="text-gray-900 font-bold text-lg mt-4 text-center">
-        {product.name || "Ürün adı yok"}
+        {product.name || "Product Name"}
       </h3>
-
-      {/* Açıklama */}
       <p className="text-gray-500 text-sm text-center">
-        {product.description || "Açıklama bulunamadı"}
+        {product.description || "Product Description"}
       </p>
-
-      {/* Fiyatlandırma */}
       <div className="flex gap-2 mt-2">
         <span className="text-gray-400 line-through">
           $
@@ -60,18 +41,16 @@ const ProductCard = ({ product }) => {
           ${product.price || "N/A"}
         </span>
       </div>
-
-      {/* Ek Bilgiler */}
       <div className="mt-3 w-full text-center text-gray-600 text-sm">
         <p>
-          <strong>Stock:</strong> {product.stock ?? "Bilinmiyor"}
+          <strong>Stock:</strong> {product.stock ?? "Unknown"}
         </p>
         <p>
           <strong>Rating:</strong> ⭐{" "}
           {product.rating ? product.rating.toFixed(1) : "N/A"}
         </p>
         <p>
-          <strong>Sold:</strong> {product.sell_count ?? "Bilinmiyor"} pcs
+          <strong>Sold:</strong> {product.sell_count ?? "Unknown"} pcs
         </p>
       </div>
     </div>

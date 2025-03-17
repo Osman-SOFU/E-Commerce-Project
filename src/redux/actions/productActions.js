@@ -19,6 +19,20 @@ export const fetchProducts =
     }
   };
 
+export const fetchProductById = (productId) => async (dispatch) => {
+  try {
+    dispatch({ type: "SET_FETCH_STATE", payload: "LOADING" });
+
+    const response = await api.get(`/products/${productId}`);
+    dispatch({ type: "SET_PRODUCT_DETAIL", payload: response.data });
+
+    dispatch({ type: "SET_FETCH_STATE", payload: "SUCCESS" });
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    dispatch({ type: "SET_FETCH_STATE", payload: "ERROR" });
+  }
+};
+
 // Belirli bir kategorideki ürünleri çek
 export const fetchProductsByCategory = (categoryId) => async (dispatch) => {
   try {

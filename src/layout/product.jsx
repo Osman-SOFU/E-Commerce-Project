@@ -1,16 +1,22 @@
-import { useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useState, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductCard from "../components/productCard";
+import { fetchProducts } from "../redux/actions/productActions";
 
 const Product = () => {
   const [showSlider, setShowSlider] = useState(false);
   const sliderRef = useRef(null); // Slider'ı kontrol etmek için referans
+  const dispatch = useDispatch();
 
   // 🔥 Ürünleri Redux Store'dan çekiyoruz!
-  const { productList } = useSelector((state) => state.product);
+  const { productList, fetchState } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   const sliderSettings = {
     dots: true,
@@ -42,6 +48,16 @@ const Product = () => {
       sliderRef.current.slickPrev(); // Yukarı kaydırma
     }
   };
+
+  if (fetchState === "LOADING") {
+    return <div className="text-center text-xl">Loading...</div>;
+  }
+
+  if (fetchState === "ERROR") {
+    return (
+      <div className="text-red-500 text-center">Failed to fetch products.</div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center max-w-[1300px] mx-auto px-4 py-10">

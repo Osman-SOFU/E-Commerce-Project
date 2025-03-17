@@ -44,12 +44,15 @@ const App = () => {
           <Header /> {/* Router içinde olmalı */}
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route
+              path="/shop/:gender/:categoryName/:categoryId/:productNameSlug/:productId"
+              component={ProductDetailPage}
+            />
             <Route exact path="/shop" component={ShopPage} />
             <Route
               path="/shop/:gender/:categoryName/:categoryId"
               component={ShopPage}
             />
-            <Route path="/product/:productId" component={ProductDetailPage} />
             <Route path="/contact" component={ContactPage} />
             <Route path="/team" component={TeamPage} />
             <Route path="/about-us" component={AboutUs} />
