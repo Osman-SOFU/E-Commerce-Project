@@ -13,21 +13,32 @@ import { slugify } from "../utils/slugify";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+
+  const toggleCart = () => {
+    setCartOpen((prev) => !prev);
+  };
+
   const history = useHistory();
   const dispatch = useDispatch();
+
   const menuRef = useRef(null);
 
   const user = useSelector((state) => state.auth.user); // Redux state'inden user al
   const { categories } = useSelector((state) => state.categories);
 
-  useEffect(() => {
-    console.log("NavBar user from Redux:", user); // ✅ Kontrol
-  }, [user]);
+  const cart = useSelector((state) => state.shoppingCart.cart);
 
   useEffect(() => {
     dispatch(loadUserFromLocalStorage());
     dispatch(fetchCategories());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      setCartOpen(true);
+    }
+  }, [cart]);
 
   const handleLoginClick = () => {
     history.push("/login");
@@ -42,6 +53,14 @@ const Header = () => {
     history.push("/login");
   };
 
+  const handleCheckout = () => {
+    history.push("/checkout");
+  };
+
+  const handleViewCart = () => {
+    history.push("/cart");
+  };
+
   const gravatarUrl = user
     ? `https://www.gravatar.com/avatar/${md5(user.email)}`
     : "";
@@ -49,19 +68,6 @@ const Header = () => {
   // Kadın ve Erkek Kategorilerini Filtreleme
   const womenCategories = categories.filter((cat) => cat.gender === "k");
   const menCategories = categories.filter((cat) => cat.gender === "e");
-
-  // Sayfa dışına tıklanınca menüyü kapatma
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <>
@@ -201,19 +207,94 @@ const Header = () => {
             </div>
           )}
           <Search className="w-6 h-6 cursor-pointer" />
-          <Icon icon="mdi:cart" className="w-6 h-6 cursor-pointer" />
+
+          <button onClick={toggleCart} className="relative">
+            <Icon icon="mdi:cart" className="w-6 h-6 cursor-pointer" />
+            {cart.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">
+                {cart.reduce((total, item) => total + item.count, 0)}
+              </span>
+            )}
+          </button>
+
           <Icon icon="mdi:heart" className="w-6 h-6 cursor-pointer" />
         </div>
         <div className="lg:hidden flex items-center space-x-4">
           <User className="w-6 h-6 cursor-pointer" onClick={handleLoginClick} />
           <Search className="w-6 h-6 cursor-pointer" />
-          <ShoppingCart className="w-6 h-6 cursor-pointer" />
+
+          {/* Sepet Butonu - Hem Masaüstü Hem Mobilde */}
+          <button onClick={toggleCart} className="relative">
+            <ShoppingCart className="w-6 h-6 cursor-pointer" />
+            {cart.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">
+                {cart.reduce((total, item) => total + item.count, 0)}
+              </span>
+            )}
+          </button>
+
           <Menu
             className="w-6 h-6 cursor-pointer"
             onClick={() => setMenuOpen(!menuOpen)}
           />
         </div>
       </nav>
+
+      {/* 🛒 Shopping Cart Açılır Penceresi */}
+      <div
+        className={`fixed right-0 top-0 w-80 sm:w-96 h-full bg-white shadow-lg transform transition-transform ${
+          cartOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        style={{ zIndex: 9999 }}
+      >
+        <div className="p-4 flex justify-between items-center border-b">
+          <h3 className="font-bold">Sepet ({cart.length} Ürün)</h3>
+          <button onClick={toggleCart} className="text-gray-600 text-xl">
+            ✖
+          </button>
+        </div>
+
+        <div className="p-4">
+          {cart.length === 0 ? (
+            <p className="text-gray-500">Sepetiniz boş</p>
+          ) : (
+            cart.map((item) => (
+              <div
+                key={item.product.id}
+                className="flex items-center justify-between border-b py-2"
+              >
+                <img
+                  src={item.product.images[0]?.url}
+                  alt={item.product.name}
+                  className="w-12 h-12 rounded-md"
+                />
+                <div className="flex-1 ml-2">
+                  <h4 className="font-semibold text-sm">{item.product.name}</h4>
+                  <p className="text-xs">Adet: {item.count}</p>
+                  <p className="text-sm font-bold">
+                    ${(item.product.price * item.count).toFixed(2)}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
+          {/* Butonlar */}
+          <div className="flex justify-between mt-3">
+            <button
+              onClick={handleViewCart}
+              className="border border-gray-500 text-gray-700 px-4 py-2 rounded w-1/2 mr-2"
+            >
+              Sepete Git
+            </button>
+            <button
+              onClick={handleCheckout}
+              className="bg-orange-500 text-white px-4 py-2 rounded w-1/2"
+            >
+              Siparişi Tamamla
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Mobil Menü */}
       {menuOpen && (

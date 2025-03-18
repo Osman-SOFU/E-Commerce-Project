@@ -6,8 +6,6 @@ export const loginUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await api.post("/login", userData);
-      console.log("Login API Response:", response.data);
-
       const { token, name, email, role_id } = response.data;
       const user = { name, email, role_id }; // ✅ user objesi oluştur
 
@@ -32,9 +30,6 @@ export const verifyToken = createAsyncThunk(
       if (!token) throw new Error("No token found");
 
       const response = await api.get("/verify"); // Token otomatik olarak header'a ekleniyor.
-
-      console.log("Verify API Response:", response.data);
-
       const { name, email, role_id, token: newToken } = response.data;
       const user = { name, email, role_id };
 

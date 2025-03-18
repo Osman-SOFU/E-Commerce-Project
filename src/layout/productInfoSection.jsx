@@ -1,7 +1,9 @@
 import { Heart, ShoppingCart, Eye, Star } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "../redux/actions/shoppingCartActions"; // Import the action
 
 const ProductInfoSection = () => {
+  const dispatch = useDispatch();
   const selectedProduct = useSelector((state) => state.product.selectedProduct);
 
   if (!selectedProduct) return <p>Loading product info...</p>;
@@ -11,6 +13,10 @@ const ProductInfoSection = () => {
   const fullStars = Math.floor(rating); // Tam dolu yıldız sayısı
   const hasHalfStar = rating % 1 >= 0.5; // Yarım yıldız var mı?
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0); // Boş yıldız sayısı
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(selectedProduct));
+  };
 
   return (
     <div className="w-full md:w-1/2 flex flex-col justify-between md:self-start md:mt-0 mt-8">
@@ -68,7 +74,10 @@ const ProductInfoSection = () => {
         </div>
 
         <div className="flex flex-wrap gap-4">
-          <button className="px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md">
+          <button
+            onClick={handleAddToCart}
+            className="px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md w-full"
+          >
             Select Options
           </button>
           <button className="p-2 rounded-full border border-gray-300 hover:border-blue-500">

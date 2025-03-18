@@ -16,7 +16,6 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(verifyToken.fulfilled, (state, action) => {
-      console.log("Reducer verifyToken payload:", action.payload); // ✅ Kontrol
       state.user = action.payload.user;
       state.token = action.payload.token;
     });
@@ -26,7 +25,6 @@ const authSlice = createSlice({
       state.token = null;
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      console.log("Reducer loginUser payload:", action.payload); // ✅ Kontrol
       state.user = action.payload.user;
       state.token = action.payload.token;
     });
