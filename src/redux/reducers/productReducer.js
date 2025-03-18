@@ -23,6 +23,8 @@ const productReducer = (state = initialState, action) => {
       return { ...state, total: action.payload };
     case "SET_FETCH_STATE":
       return { ...state, fetchState: action.payload };
+    case "SET_SELECTED_PRODUCT": // ✅ Seçili ürünü güncelle
+      return { ...state, selectedProduct: action.payload };
     default:
       return state;
   }

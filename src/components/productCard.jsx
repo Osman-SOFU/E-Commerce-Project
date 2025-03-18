@@ -1,13 +1,18 @@
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSelectedProduct } from "../redux/actions/productActions"; // ✅ Redux Action'ı ekledik
 import { slugify } from "../utils/slugify";
 
 const ProductCard = ({ product }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleCardClick = () => {
+    dispatch(setSelectedProduct(product)); // ✅ Ürünü Redux'a kaydet
+
     const category = product.category_id;
-    const gender = "unisex"; // Replace with actual gender data
-    const categoryName = "fashion"; // Replace with actual category name
+    const gender = "unisex"; // Eğer varsa gerçek değeriyle değiştir
+    const categoryName = "fashion"; // Eğer varsa gerçek değeriyle değiştir
     const productNameSlug = slugify(product.name);
 
     history.push(

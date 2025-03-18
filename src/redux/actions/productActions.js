@@ -51,3 +51,8 @@ export const fetchProductsByCategory = (categoryId) => async (dispatch) => {
     dispatch({ type: "SET_FETCH_STATE", payload: "ERROR" });
   }
 };
+
+export const setSelectedProduct = (product) => ({
+  type: "SET_SELECTED_PRODUCT",
+  payload: product,
+});

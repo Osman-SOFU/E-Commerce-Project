@@ -1,47 +1,72 @@
 import { Heart, ShoppingCart, Eye, Star } from "lucide-react";
-import productData from "../data/productData";
+import { useSelector } from "react-redux";
 
 const ProductInfoSection = () => {
-  const { price } = productData;
+  const selectedProduct = useSelector((state) => state.product.selectedProduct);
+
+  if (!selectedProduct) return <p>Loading product info...</p>;
+
+  // ⭐ Yıldızları Dinamik Olarak Ayarla
+  const rating = selectedProduct.rating || 0; // Null veya undefined olursa 0 yap
+  const fullStars = Math.floor(rating); // Tam dolu yıldız sayısı
+  const hasHalfStar = rating % 1 >= 0.5; // Yarım yıldız var mı?
+  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0); // Boş yıldız sayısı
 
   return (
     <div className="w-full md:w-1/2 flex flex-col justify-between md:self-start md:mt-0 mt-8">
       <div className="w-full md:ml-4 md:pl-4">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">
-          Floating Phone
+          {selectedProduct.name}
         </h1>
-        <div className="flex items-center gap-2 mb-4">
-          {[...Array(4)].map((_, i) => (
+
+        {/* ⭐ Dinamik Yıldız Sistemi */}
+        <div className="flex items-center gap-1 mb-4">
+          {[...Array(fullStars)].map((_, i) => (
             <Star
-              key={i}
+              key={`full-${i}`}
               className="w-5 h-5 text-yellow-500"
               fill="currentColor"
             />
           ))}
-          <Star
-            className="w-5 h-5 text-yellow-500"
-            fill="currentColor"
-            style={{ clipPath: "inset(0 50% 0 0)" }}
-          />
-          <span className="text-sm text-gray-500">10 Reviews</span>
+          {hasHalfStar && (
+            <Star
+              className="w-5 h-5 text-yellow-500"
+              fill="currentColor"
+              style={{ clipPath: "inset(0 50% 0 0)" }}
+            />
+          )}
+          {[...Array(emptyStars)].map((_, i) => (
+            <Star key={`empty-${i}`} className="w-5 h-5 text-gray-300" />
+          ))}
+          <span className="text-sm text-gray-500 ml-2">
+            {selectedProduct.rating.toFixed(1)} / 5 (
+            {selectedProduct.sell_count} Reviews)
+          </span>
         </div>
-        <p className="text-3xl font-bold text-gray-800 mb-2">{price}</p>
+
+        <p className="text-3xl font-bold text-gray-800 mb-2">
+          ${selectedProduct.price}
+        </p>
         <p className="text-sm text-gray-500 mb-4">
           Availability:{" "}
-          <span className="text-blue-600 font-semibold">In Stock</span>
+          <span className="text-blue-600 font-semibold">
+            {selectedProduct.stock} In Stock
+          </span>
         </p>
+
         <p className="text-sm text-gray-500 leading-6 mb-6">
-          Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.
-          RELIT official consequent door ENIM RELIT Mollie. Excitation venial
-          consequent sent nostrum met.
+          {selectedProduct.description}
         </p>
+
         <hr className="w-full mb-6" />
+
         <div className="flex gap-4 mb-6">
           <button className="w-8 h-8 rounded-full bg-blue-500" />
           <button className="w-8 h-8 rounded-full bg-green-500" />
           <button className="w-8 h-8 rounded-full bg-orange-500" />
           <button className="w-8 h-8 rounded-full bg-gray-800" />
         </div>
+
         <div className="flex flex-wrap gap-4">
           <button className="px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md">
             Select Options

@@ -1,7 +1,11 @@
 import { ChevronRight } from "lucide-react";
-import image from "../icons/product-detail-image-1.png";
+import { useSelector } from "react-redux";
 
 const ProductDetailDescription = () => {
+  const selectedProduct = useSelector((state) => state.product.selectedProduct);
+
+  if (!selectedProduct) return <p>Loading product details...</p>;
+
   return (
     <div className="w-full flex flex-col items-center overflow-hidden">
       {/* Navbar Section */}
@@ -13,7 +17,7 @@ const ProductDetailDescription = () => {
           Additional Information
         </span>
         <span className="mx-4 text-lg font-semibold cursor-pointer">
-          Reviews (0)
+          Reviews ({selectedProduct.sell_count})
         </span>
       </div>
 
@@ -21,11 +25,14 @@ const ProductDetailDescription = () => {
       <div className="flex flex-col md:flex-row items-start justify-between gap-10 p-6 w-full max-w-7xl">
         {/* Image Section */}
         <div className="md:w-1/3 w-full flex justify-center">
-          <div className="rounded-xl overflow-hidden w-full h-72 md:h-96 ">
+          <div className="rounded-xl overflow-hidden w-full h-72 md:h-96">
             <img
               className="w-full h-full object-contain rounded-xl"
-              src={image}
-              alt="Product"
+              src={
+                selectedProduct.images?.[0]?.url ||
+                "https://via.placeholder.com/400"
+              }
+              alt={selectedProduct.name}
             />
           </div>
         </div>
@@ -33,25 +40,10 @@ const ProductDetailDescription = () => {
         {/* Text Section */}
         <div className="md:w-1/3 w-full flex flex-col gap-6">
           <h2 className="text-2xl font-bold text-gray-800">
-            the quick fox jumps over
+            {selectedProduct.name}
           </h2>
           <p className="text-gray-600 text-sm leading-relaxed">
-            Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.
-            RELIT official consequent door ENIM RELIT Mollie. Excitation venial
-            consequent sent nostrum met. Met minim Mollie non desert Alamo est
-            sit cliquey dolor do met sent.
-          </p>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.
-            RELIT official consequent door ENIM RELIT Mollie. Excitation venial
-            consequent sent nostrum met. Met minim Mollie non desert Alamo est
-            sit cliquey dolor do met sent.
-          </p>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.
-            RELIT official consequent door ENIM RELIT Mollie. Excitation venial
-            consequent sent nostrum met. Met minim Mollie non desert Alamo est
-            sit cliquey dolor do met sent.
+            {selectedProduct.description}
           </p>
         </div>
 
@@ -60,7 +52,7 @@ const ProductDetailDescription = () => {
           {[1, 2].map((_, sectionIndex) => (
             <div key={sectionIndex} className="flex flex-col gap-4">
               <h2 className="text-2xl font-bold text-gray-800">
-                the quick fox jumps over
+                Product Features
               </h2>
               {[1, 2, 3, 4]
                 .slice(0, sectionIndex === 0 ? 4 : 3)
@@ -68,7 +60,7 @@ const ProductDetailDescription = () => {
                   <div key={index} className="flex items-center gap-4">
                     <ChevronRight className="w-4 h-4 text-gray-500" />
                     <p className="text-gray-600 text-sm">
-                      the quick fox jumps over the lazy dog
+                      High-quality fabric and elegant design
                     </p>
                   </div>
                 ))}
