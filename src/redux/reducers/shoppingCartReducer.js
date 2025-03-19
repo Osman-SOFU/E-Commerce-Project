@@ -26,7 +26,28 @@ const shoppingCartReducer = (state = initialState, action) => {
         };
       }
     }
-
+    case "REMOVE_FROM_CART": {
+      const updatedCart = state.cart.filter(
+        (item) => item.product.id !== action.payload
+      );
+      return { ...state, cart: updatedCart };
+    }
+    case "UPDATE_CART_ITEM_COUNT": {
+      const updatedCart = state.cart.map((item) =>
+        item.product.id === action.payload.productId
+          ? { ...item, count: action.payload.count }
+          : item
+      );
+      return { ...state, cart: updatedCart };
+    }
+    case "TOGGLE_CART_ITEM_SELECTION": {
+      const updatedCart = state.cart.map((item) =>
+        item.product.id === action.payload
+          ? { ...item, checked: !item.checked }
+          : item
+      );
+      return { ...state, cart: updatedCart };
+    }
     default:
       return state;
   }

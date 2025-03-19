@@ -20,6 +20,7 @@ import SignUpForm from "./pages/signUpForm.jsx";
 import LoginForm from "./components/loginForm.jsx";
 import Header from "./components/header.jsx";
 import Footer from "./components/footer.jsx";
+import ShoppingCart from "./components/shoppingCart";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ const App = () => {
             <Route path="/about-us" component={AboutUs} />
             <Route path="/signup" component={SignUpForm} />
             <Route path="/login" component={LoginForm} />
+            <Route path="/cart" component={ShoppingCart} />
           </Switch>
           <Footer />
         </Router>
