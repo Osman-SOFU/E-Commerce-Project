@@ -30,6 +30,19 @@ const Header = () => {
   const cart = useSelector((state) => state.shoppingCart.cart);
 
   useEffect(() => {
+    console.log(
+      "Stored token before verification:",
+      localStorage.getItem("token")
+    );
+    console.log(
+      "Stored user before verification:",
+      localStorage.getItem("user")
+    );
+
+    // localStorage değiştiğinde event logla
+    window.addEventListener("storage", (event) => {
+      console.log("Storage event triggered:", event);
+    });
     dispatch(loadUserFromLocalStorage());
     dispatch(fetchCategories());
   }, [dispatch]);
@@ -53,8 +66,8 @@ const Header = () => {
     history.push("/login");
   };
 
-  const handleCheckout = () => {
-    history.push("/checkout");
+  const handleCreateOrder = () => {
+    history.push("/create-order");
   };
 
   const handleViewCart = () => {
@@ -287,7 +300,7 @@ const Header = () => {
               Sepete Git
             </button>
             <button
-              onClick={handleCheckout}
+              onClick={handleCreateOrder}
               className="bg-orange-500 text-white px-4 py-2 rounded w-1/2"
             >
               Siparişi Tamamla

@@ -1,13 +1,14 @@
 import "./App.css";
 
 import { useEffect } from "react";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Stil dosyasını import et
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import { loadUserFromLocalStorage } from "./redux/actions/authActions";
-
 import { verifyToken } from "./redux/actions/authActions";
 
 import HomePage from "./pages/homePage.jsx";
@@ -17,10 +18,13 @@ import ContactPage from "./pages/contactPage";
 import TeamPage from "./pages/teamPage.jsx";
 import AboutUs from "./pages/aboutUs.jsx";
 import SignUpForm from "./pages/signUpForm.jsx";
+
 import LoginForm from "./components/loginForm.jsx";
 import Header from "./components/header.jsx";
 import Footer from "./components/footer.jsx";
 import ShoppingCart from "./components/shoppingCart";
+import ProtectedRoute from "./components/protectedRoute";
+import CreateOrderPage from "./pages/createOrderPage.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -55,6 +59,8 @@ const App = () => {
               component={ShopPage}
             />
             <Route path="/contact" component={ContactPage} />
+            <ProtectedRoute path="/create-order" component={CreateOrderPage} />
+
             <Route path="/team" component={TeamPage} />
             <Route path="/about-us" component={AboutUs} />
             <Route path="/signup" component={SignUpForm} />

@@ -13,22 +13,28 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onSubmit = (data) => {
-    dispatch(loginUser(data))
-      .then(async (response) => {
-        if (response.payload?.token) {
-          toast.success("Login successful!");
-          console.log("Login token:", response.payload.token); // Kontrol için ekleyin
-          await dispatch(verifyToken()); // Doğrulama yap
-          history.push("/");
-        } else {
-          toast.error("Login failed!");
-        }
-      })
-      .catch((err) => {
-        console.error("Login error:", err); // Hata kontrolü
+  const onSubmit = async (data) => {
+    try {
+      const response = await dispatch(loginUser(data));
+
+      if (response.payload?.token) {
+        toast.success("Login successful!");
+
+        // 🔹 Token'in doğru kaydedildiğini kontrol et
+        console.log("Token in localStorage:", localStorage.getItem("token"));
+        console.log("User in localStorage:", localStorage.getItem("user"));
+
+        // 🔹 Token doğrulama isteğini yap
+        await dispatch(verifyToken());
+
+        history.push("/");
+      } else {
         toast.error("Login failed!");
-      });
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      toast.error("Login failed!");
+    }
   };
 
   return (

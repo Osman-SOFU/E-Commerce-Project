@@ -1,4 +1,3 @@
-// services/api.js
 import axios from "axios";
 
 const api = axios.create({
@@ -6,13 +5,15 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// İstek öncesi token eklemek için interceptor
+// 🔹 API çağrılarında token'i otomatik ekle
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
     if (token) {
-      config.headers.Authorization = token; // Bearer kaldırıldı
+      config.headers.Authorization = `Bearer ${token}`;
     }
+    console.log("Authorization Header:", config.headers.Authorization);
+
     return config;
   },
   (error) => Promise.reject(error)
