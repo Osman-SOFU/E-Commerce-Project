@@ -1,3 +1,4 @@
+// filepath: e:\GitHub\E-Commerce-Project\src\components\header.jsx
 import { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { User, Search, ShoppingCart, Menu } from "lucide-react";
@@ -23,6 +24,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const menuRef = useRef(null);
+  const cartRef = useRef(null);
 
   const user = useSelector((state) => state.auth.user); // Redux state'inden user al
   const { categories } = useSelector((state) => state.categories);
@@ -39,6 +41,24 @@ const Header = () => {
       setCartOpen(true);
     }
   }, [cart]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        setCartOpen(false);
+      }
+    };
+
+    if (cartOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [cartOpen]);
 
   const handleLoginClick = () => {
     history.push("/login");
@@ -242,6 +262,7 @@ const Header = () => {
 
       {/* 🛒 Shopping Cart Açılır Penceresi */}
       <div
+        ref={cartRef}
         className={`fixed right-0 top-0 w-80 sm:w-96 h-full bg-white shadow-lg transform transition-transform ${
           cartOpen ? "translate-x-0" : "translate-x-full"
         }`}

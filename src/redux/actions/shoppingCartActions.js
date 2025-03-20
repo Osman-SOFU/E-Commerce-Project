@@ -1,3 +1,6 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import api from "../../services/api";
+
 export const setCart = (cart) => ({
   type: "SET_CART",
   payload: cart,
@@ -32,3 +35,18 @@ export const toggleCartItemSelection = (productId) => ({
   type: "TOGGLE_CART_ITEM_SELECTION",
   payload: productId,
 });
+
+export const fetchAddresses = createAsyncThunk(
+  "addresses/fetchAddresses",
+  async (_, { getState, rejectWithValue }) => {
+    const token = getState().auth.token;
+    try {
+      const response = await api.get("/user/address", {
+        headers: { Authorization: token },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

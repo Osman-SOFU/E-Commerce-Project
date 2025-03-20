@@ -1,7 +1,9 @@
+// filepath: e:\GitHub\E-Commerce-Project\src\redux\reducers\shoppingCartReducer.js
 const initialState = {
-  cart: [],
-  payment: {},
-  address: {},
+  cart: JSON.parse(localStorage.getItem("cart")) || [],
+  payment: JSON.parse(localStorage.getItem("payment")) || {},
+  address: JSON.parse(localStorage.getItem("address")) || {},
+  addresses: [],
 };
 
 const shoppingCartReducer = (state = initialState, action) => {
@@ -11,25 +13,24 @@ const shoppingCartReducer = (state = initialState, action) => {
         (item) => item.product.id === action.payload.id
       );
 
+      let updatedCart;
       if (existingProductIndex !== -1) {
-        const updatedCart = [...state.cart];
+        updatedCart = [...state.cart];
         updatedCart[existingProductIndex].count += 1;
-        return { ...state, cart: updatedCart };
       } else {
-        const newCart = [
+        updatedCart = [
           ...state.cart,
           { count: 1, checked: true, product: action.payload },
         ];
-        return {
-          ...state,
-          cart: newCart,
-        };
       }
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return { ...state, cart: updatedCart };
     }
     case "REMOVE_FROM_CART": {
       const updatedCart = state.cart.filter(
         (item) => item.product.id !== action.payload
       );
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
       return { ...state, cart: updatedCart };
     }
     case "UPDATE_CART_ITEM_COUNT": {
@@ -38,6 +39,7 @@ const shoppingCartReducer = (state = initialState, action) => {
           ? { ...item, count: action.payload.count }
           : item
       );
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
       return { ...state, cart: updatedCart };
     }
     case "TOGGLE_CART_ITEM_SELECTION": {
@@ -46,7 +48,19 @@ const shoppingCartReducer = (state = initialState, action) => {
           ? { ...item, checked: !item.checked }
           : item
       );
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
       return { ...state, cart: updatedCart };
+    }
+    case "SET_PAYMENT": {
+      localStorage.setItem("payment", JSON.stringify(action.payload));
+      return { ...state, payment: action.payload };
+    }
+    case "SET_ADDRESS": {
+      localStorage.setItem("address", JSON.stringify(action.payload));
+      return { ...state, address: action.payload };
+    }
+    case "addresses/fetchAddresses/fulfilled": {
+      return { ...state, addresses: action.payload };
     }
     default:
       return state;

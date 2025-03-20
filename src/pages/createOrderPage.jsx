@@ -1,10 +1,13 @@
+// filepath: e:\GitHub\E-Commerce-Project\src\pages\createOrderPage.jsx
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setAddress } from "../redux/actions/shoppingCartActions";
-import api from "../services/api"; // API modülünü içe aktar
+import {
+  setAddress,
+  fetchAddresses,
+} from "../redux/actions/shoppingCartActions"; // Redux action'ı içe aktarın
+import api from "../services/api";
 
 const CreateOrderPage = () => {
-  const [addresses, setAddresses] = useState([]);
   const [newAddress, setNewAddress] = useState(false);
   const [editingAddress, setEditingAddress] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -20,22 +23,12 @@ const CreateOrderPage = () => {
   });
 
   const token = useSelector((state) => state.auth.token);
+  const addresses = useSelector((state) => state.shoppingCart.addresses);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchAddresses = async () => {
-      try {
-        const response = await api.get("/user/address"); // Base URL ile çağır
-        console.log("API Response:", response.data);
-        setAddresses(Array.isArray(response.data) ? response.data : []);
-      } catch (error) {
-        console.error("Failed to fetch addresses", error);
-        setAddresses([]);
-      }
-    };
-
-    fetchAddresses();
-  }, []);
+    dispatch(fetchAddresses()); // Redux action'ı çağırın
+  }, [dispatch]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,22 +43,19 @@ const CreateOrderPage = () => {
           "/user/address",
           { id: editingAddress, ...formData },
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: token },
           }
         );
       } else {
         await api.post("/user/address", formData, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: token },
         });
       }
 
       setNewAddress(false);
       setEditingAddress(null);
 
-      const response = await api.get("/user/address", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setAddresses(response.data);
+      dispatch(fetchAddresses()); // Adresleri yeniden yükleyin
     } catch (error) {
       console.error("Failed to save address", error);
     }
@@ -74,13 +64,10 @@ const CreateOrderPage = () => {
   const handleDelete = async (addressId) => {
     try {
       await api.delete(`/user/address/${addressId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: token },
       });
 
-      const response = await api.get("/user/address", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setAddresses(response.data);
+      dispatch(fetchAddresses()); // Adresleri yeniden yükleyin
     } catch (error) {
       console.error("Failed to delete address", error);
     }
@@ -215,10 +202,10 @@ const CreateOrderPage = () => {
               className="p-2 border rounded"
             >
               <option value="">Şehir Seçin</option>
-              <option value="istanbul">İstanbul</option>
-              <option value="ankara">Ankara</option>
-              <option value="izmir">İzmir</option>
-              <option value="sakarya">Sakarya</option>
+              <option value="İstanbul">İstanbul</option>
+              <option value="Ankara">Ankara</option>
+              <option value="İzmir">İzmir</option>
+              <option value="Sakarya">Sakarya</option>
 
               {/* Diğer şehirler buraya eklenebilir */}
             </select>

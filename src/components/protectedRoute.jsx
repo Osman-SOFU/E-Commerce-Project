@@ -1,14 +1,19 @@
+// filepath: e:\GitHub\E-Commerce-Project\src\components\protectedRoute.jsx
 import { Route, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const isAuthenticated = useSelector((state) => state.auth.token);
+  const { token, loading } = useSelector((state) => state.auth);
+
+  if (loading) {
+    return <div>Loading...</div>; // Yüklenme durumunda bir yükleniyor mesajı gösterin
+  }
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+        token ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );
