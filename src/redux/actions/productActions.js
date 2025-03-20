@@ -38,7 +38,9 @@ export const fetchProductsByCategory = (categoryId) => async (dispatch) => {
   try {
     dispatch({ type: "SET_FETCH_STATE", payload: "LOADING" });
 
-    const response = await api.get(`/products?category_id=${categoryId}`);
+    const response = await api.get(`/products?category_id=${categoryId}`, {
+      headers: { Authorization: localStorage.getItem("token") },
+    });
 
     dispatch({
       type: "SET_PRODUCT_LIST",

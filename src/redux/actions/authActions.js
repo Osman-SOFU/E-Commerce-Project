@@ -6,7 +6,6 @@ export const loginUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await api.post("/login", userData);
-      console.log("Login Response:", response.data);
 
       const { token, name, email, role_id } = response.data;
       const user = { name, email, role_id };
@@ -15,13 +14,8 @@ export const loginUser = createAsyncThunk(
 
       // 🔹 Token ve kullanıcı bilgilerini kontrol et ve kaydet
       try {
-        console.log("Token to be stored:", token);
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
-        console.log(
-          "Stored Token in localStorage:",
-          localStorage.getItem("token")
-        );
       } catch (e) {
         console.error("localStorage error:", e); // localStorage hatasını kontrol et
       }
@@ -39,22 +33,23 @@ export const verifyToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      console.log("Verifying token:", token);
 
       const response = await api.get("/verify", {
-        headers: { Authorization: `Bearer ${token}` }, // 📌 Token burada gönderiliyor
+        headers: { Authorization: token },
       });
 
-      console.log("Token verification response:", response.data);
-
       if (!response.data.verified) {
-        console.warn("User is not verified.");
         return rejectWithValue(
           "User is not verified. Please check your email."
         );
       }
 
-      return { user: response.data.user, token };
+      // ✅ Eğer yeni token döndürülüyorsa, bunu güncelle
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+      }
+
+      return { user: response.data.user, token: response.data.token || token };
     } catch (error) {
       console.error("Token verification failed:", error.response?.data);
       return rejectWithValue(
@@ -71,8 +66,6 @@ export const loadUserFromLocalStorage = createAsyncThunk(
   async () => {
     const token = localStorage.getItem("token");
     const user = JSON.parse(localStorage.getItem("user"));
-
-    console.log("Loading user from localStorage:", { token, user });
 
     if (!token || !user) {
       console.warn("No token found in localStorage, user might be logged out.");

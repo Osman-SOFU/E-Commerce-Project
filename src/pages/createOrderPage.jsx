@@ -208,14 +208,20 @@ const CreateOrderPage = () => {
               onChange={handleInputChange}
               className="p-2 border rounded"
             />
-            <input
-              type="text"
+            <select
               name="city"
-              placeholder="Şehir"
               value={formData.city}
               onChange={handleInputChange}
               className="p-2 border rounded"
-            />
+            >
+              <option value="">Şehir Seçin</option>
+              <option value="istanbul">İstanbul</option>
+              <option value="ankara">Ankara</option>
+              <option value="izmir">İzmir</option>
+              <option value="sakarya">Sakarya</option>
+
+              {/* Diğer şehirler buraya eklenebilir */}
+            </select>
             <input
               type="text"
               name="district"

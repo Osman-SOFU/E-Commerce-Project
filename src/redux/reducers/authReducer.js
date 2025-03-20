@@ -20,7 +20,6 @@ const authSlice = createSlice({
       state.token = action.payload.token;
     });
     builder.addCase(verifyToken.rejected, (state, action) => {
-      console.warn("Token doğrulama başarısız oldu:", action.payload);
       if (action.payload === "User is not verified. Please check your email.") {
         state.error = "Hesabınız doğrulanmamış.";
       } else {
@@ -45,8 +44,8 @@ const authSlice = createSlice({
     builder.addCase(loadUserFromLocalStorage.fulfilled, (state, action) => {
       state.token = action.payload.token;
       state.user = action.payload.user;
-      console.log(action.payload);
     });
+
     builder.addCase(loadUserFromLocalStorage.rejected, (state, action) => {
       state.token = null;
       state.user = null;

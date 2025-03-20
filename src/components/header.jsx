@@ -30,19 +30,6 @@ const Header = () => {
   const cart = useSelector((state) => state.shoppingCart.cart);
 
   useEffect(() => {
-    console.log(
-      "Stored token before verification:",
-      localStorage.getItem("token")
-    );
-    console.log(
-      "Stored user before verification:",
-      localStorage.getItem("user")
-    );
-
-    // localStorage değiştiğinde event logla
-    window.addEventListener("storage", (event) => {
-      console.log("Storage event triggered:", event);
-    });
     dispatch(loadUserFromLocalStorage());
     dispatch(fetchCategories());
   }, [dispatch]);
