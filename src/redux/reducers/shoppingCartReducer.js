@@ -62,6 +62,14 @@ const shoppingCartReducer = (state = initialState, action) => {
     case "addresses/fetchAddresses/fulfilled": {
       return { ...state, addresses: action.payload };
     }
+    case "SET_SHIPPING_ADDRESS": {
+      localStorage.setItem("shippingAddress", JSON.stringify(action.payload));
+      return { ...state, shippingAddress: action.payload };
+    }
+    case "SET_BILLING_ADDRESS": {
+      localStorage.setItem("billingAddress", JSON.stringify(action.payload));
+      return { ...state, billingAddress: action.payload };
+    }
     default:
       return state;
   }

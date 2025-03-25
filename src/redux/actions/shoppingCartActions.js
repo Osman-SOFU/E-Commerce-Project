@@ -50,3 +50,13 @@ export const fetchAddresses = createAsyncThunk(
     }
   }
 );
+
+export const setShippingAddress = (address) => ({
+  type: "SET_SHIPPING_ADDRESS",
+  payload: address,
+});
+
+export const setBillingAddress = (address) => ({
+  type: "SET_BILLING_ADDRESS",
+  payload: address,
+});

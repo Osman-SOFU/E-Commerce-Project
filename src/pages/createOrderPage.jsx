@@ -1,16 +1,15 @@
-// filepath: e:\GitHub\E-Commerce-Project\src\pages\createOrderPage.jsx
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setAddress,
   fetchAddresses,
-} from "../redux/actions/shoppingCartActions"; // Redux action'ı içe aktarın
+  setShippingAddress,
+  setBillingAddress,
+} from "../redux/actions/shoppingCartActions";
 import api from "../services/api";
 
 const CreateOrderPage = () => {
   const [newAddress, setNewAddress] = useState(false);
   const [editingAddress, setEditingAddress] = useState(null);
-  const [selectedAddress, setSelectedAddress] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     name: "",
@@ -26,8 +25,11 @@ const CreateOrderPage = () => {
   const addresses = useSelector((state) => state.shoppingCart.addresses);
   const dispatch = useDispatch();
 
+  const [selectedShippingAddress, setSelectedShippingAddress] = useState(null);
+  const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
+
   useEffect(() => {
-    dispatch(fetchAddresses()); // Redux action'ı çağırın
+    dispatch(fetchAddresses());
   }, [dispatch]);
 
   const handleInputChange = (e) => {
@@ -42,20 +44,16 @@ const CreateOrderPage = () => {
         await api.put(
           "/user/address",
           { id: editingAddress, ...formData },
-          {
-            headers: { Authorization: token },
-          }
+          { headers: { Authorization: token } }
         );
       } else {
         await api.post("/user/address", formData, {
           headers: { Authorization: token },
         });
       }
-
       setNewAddress(false);
       setEditingAddress(null);
-
-      dispatch(fetchAddresses()); // Adresleri yeniden yükleyin
+      dispatch(fetchAddresses());
     } catch (error) {
       console.error("Failed to save address", error);
     }
@@ -66,88 +64,84 @@ const CreateOrderPage = () => {
       await api.delete(`/user/address/${addressId}`, {
         headers: { Authorization: token },
       });
-
-      dispatch(fetchAddresses()); // Adresleri yeniden yükleyin
+      dispatch(fetchAddresses());
     } catch (error) {
       console.error("Failed to delete address", error);
     }
   };
 
   const handleEdit = (address) => {
-    setFormData({
-      title: address.title,
-      name: address.name,
-      surname: address.surname,
-      phone: address.phone,
-      city: address.city,
-      district: address.district,
-      neighborhood: address.neighborhood,
-      address: address.address,
-    });
+    setFormData({ ...address });
     setEditingAddress(address.id);
     setNewAddress(true);
   };
 
-  const handleSelectAddress = (address) => {
-    setSelectedAddress(address.id);
-    dispatch(setAddress(address));
+  const renderAddressCard = (address, selectedId, onSelect, color) => (
+    <div
+      key={address.id}
+      className={`p-4 border rounded-lg cursor-pointer shadow-sm ${
+        selectedId === address.id
+          ? `border-${color}-500 bg-${color}-100`
+          : "border-gray-300"
+      }`}
+      onClick={() => onSelect(address)}
+    >
+      <div className="flex justify-between items-center">
+        <span className="font-semibold">{address.title}</span>
+        <div>
+          <button
+            className="text-blue-500 hover:underline mr-2"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEdit(address);
+            }}
+          >
+            Düzenle
+          </button>
+          <button
+            className="text-red-500 hover:underline"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDelete(address.id);
+            }}
+          >
+            Sil
+          </button>
+        </div>
+      </div>
+      <p>
+        {address.name} {address.surname}
+      </p>
+      <p>{address.phone}</p>
+      <p>
+        {address.city}, {address.district}, {address.neighborhood}
+      </p>
+      <p>{address.address}</p>
+    </div>
+  );
+
+  const handleSelectShipping = (address) => {
+    setSelectedShippingAddress(address.id);
+    dispatch(setShippingAddress(address));
+  };
+
+  const handleSelectBilling = (address) => {
+    setSelectedBillingAddress(address.id);
+    dispatch(setBillingAddress(address));
   };
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <h2 className="text-xl font-bold mb-4">Adres Bilgileri</h2>
-
-      {/* Adres Listesi */}
+      <h2 className="text-xl font-bold mb-4">Teslimat Adresi Seçin</h2>
       <div className="grid grid-cols-2 gap-4">
-        {Array.isArray(addresses) && addresses.length > 0 ? (
-          addresses.map((address) => (
-            <div
-              key={address.id}
-              className={`p-4 border rounded-lg cursor-pointer shadow-sm ${
-                selectedAddress === address.id
-                  ? "border-orange-500 bg-orange-100"
-                  : "border-gray-300"
-              }`}
-              onClick={() => handleSelectAddress(address)}
-            >
-              <div className="flex justify-between items-center">
-                <span className="font-semibold">{address.title}</span>
-                <div>
-                  <button
-                    className="text-blue-500 hover:underline mr-2"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleEdit(address);
-                    }}
-                  >
-                    Düzenle
-                  </button>
-                  <button
-                    className="text-red-500 hover:underline"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDelete(address.id);
-                    }}
-                  >
-                    Sil
-                  </button>
-                </div>
-              </div>
-              <p>
-                {address.name} {address.surname}
-              </p>
-              <p>{address.phone}</p>
-              <p>
-                {address.city}, {address.district}, {address.neighborhood}
-              </p>
-              <p>{address.address}</p>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-500">Kayıtlı adres bulunamadı.</p>
+        {addresses.map((address) =>
+          renderAddressCard(
+            address,
+            selectedShippingAddress,
+            handleSelectShipping,
+            "orange"
+          )
         )}
-
-        {/* Yeni Adres Ekleme Butonu */}
         <button
           className="p-4 border border-dashed border-gray-400 text-gray-500 rounded-lg flex items-center justify-center hover:bg-gray-100"
           onClick={() => setNewAddress(true)}
@@ -156,7 +150,18 @@ const CreateOrderPage = () => {
         </button>
       </div>
 
-      {/* Adres Ekleme / Güncelleme Formu */}
+      <h2 className="text-xl font-bold mt-8 mb-4">Fatura Adresi Seçin</h2>
+      <div className="grid grid-cols-2 gap-4">
+        {addresses.map((address) =>
+          renderAddressCard(
+            address,
+            selectedBillingAddress,
+            handleSelectBilling,
+            "blue"
+          )
+        )}
+      </div>
+
       {newAddress && (
         <div className="mt-6 p-4 border rounded-lg shadow-md bg-white">
           <h3 className="text-lg font-semibold">
@@ -164,7 +169,6 @@ const CreateOrderPage = () => {
           </h3>
           <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 mt-4">
             <input
-              type="text"
               name="title"
               placeholder="Adres Başlığı"
               value={formData.title}
@@ -172,7 +176,6 @@ const CreateOrderPage = () => {
               className="p-2 border rounded"
             />
             <input
-              type="text"
               name="name"
               placeholder="Ad"
               value={formData.name}
@@ -180,7 +183,6 @@ const CreateOrderPage = () => {
               className="p-2 border rounded"
             />
             <input
-              type="text"
               name="surname"
               placeholder="Soyad"
               value={formData.surname}
@@ -188,7 +190,6 @@ const CreateOrderPage = () => {
               className="p-2 border rounded"
             />
             <input
-              type="text"
               name="phone"
               placeholder="Telefon"
               value={formData.phone}
@@ -206,11 +207,8 @@ const CreateOrderPage = () => {
               <option value="Ankara">Ankara</option>
               <option value="İzmir">İzmir</option>
               <option value="Sakarya">Sakarya</option>
-
-              {/* Diğer şehirler buraya eklenebilir */}
             </select>
             <input
-              type="text"
               name="district"
               placeholder="İlçe"
               value={formData.district}
@@ -218,7 +216,6 @@ const CreateOrderPage = () => {
               className="p-2 border rounded"
             />
             <input
-              type="text"
               name="neighborhood"
               placeholder="Mahalle"
               value={formData.neighborhood}
@@ -231,7 +228,7 @@ const CreateOrderPage = () => {
               value={formData.address}
               onChange={handleInputChange}
               className="p-2 border rounded col-span-2"
-            ></textarea>
+            />
             <button
               type="submit"
               className="bg-orange-500 text-white py-2 px-4 rounded col-span-2 hover:bg-orange-600"
@@ -242,7 +239,6 @@ const CreateOrderPage = () => {
         </div>
       )}
 
-      {/* Kaydet ve Devam Et Butonu */}
       <button className="bg-orange-500 text-white py-3 w-full rounded mt-6 hover:bg-orange-600">
         Kaydet ve Devam Et
       </button>
