@@ -60,3 +60,7 @@ export const setBillingAddress = (address) => ({
   type: "SET_BILLING_ADDRESS",
   payload: address,
 });
+
+export const clearCart = () => ({
+  type: "CLEAR_CART",
+});

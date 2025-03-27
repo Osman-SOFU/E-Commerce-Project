@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   fetchCards,
   addCard,
@@ -7,13 +8,18 @@ import {
   updateCard,
 } from "../redux/actions/cardActions";
 import { toast } from "react-toastify";
+import { clearCart } from "../redux/actions/shoppingCartActions"; // Sepeti temizlemek için eylem
+import api from "../services/api"; // API çağrıları için
 
 const PaymentPage = () => {
   const dispatch = useDispatch();
   const { cards, loading, error } = useSelector((state) => state.cards);
+  const cartItems = useSelector((state) => state.shoppingCart.cart); // Sepet öğelerini burada alın
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [use3DSecure, setUse3DSecure] = useState(false);
   const [contractAccepted, setContractAccepted] = useState(false);
+
+  const history = useHistory();
 
   const [newCard, setNewCard] = useState({
     id: null,
@@ -68,6 +74,42 @@ const PaymentPage = () => {
   };
 
   const isPayEnabled = selectedCardId && contractAccepted;
+
+  const handlePayment = async () => {
+    if (!isPayEnabled) return;
+
+    const selectedCard = cards.find((card) => card.id === selectedCardId);
+    const totalPrice = cartItems.reduce(
+      (total, item) => total + item.product.price * item.count,
+      0
+    );
+
+    const orderData = {
+      address_id: selectedCardId, // Teslimat adresi ID'si
+      order_date: new Date().toISOString(),
+      card_no: selectedCard.card_no,
+      card_name: selectedCard.name_on_card,
+      card_expire_month: selectedCard.expire_month,
+      card_expire_year: selectedCard.expire_year,
+      card_ccv: "123", // Örnek CCV (gerçek uygulamada kullanıcıdan alınmalı)
+      price: totalPrice,
+      products: cartItems.map((item) => ({
+        product_id: item.product.id,
+        count: item.count,
+        detail: item.product.detail || "",
+      })),
+    };
+
+    try {
+      await api.post("/order", orderData); // Sipariş oluşturma isteği
+      toast.success("Siparişiniz başarıyla alındı!");
+      dispatch(clearCart()); // Sepeti temizle
+    } catch (error) {
+      toast.error("Sipariş oluşturulurken bir hata oluştu.");
+      console.error(error);
+    }
+    history.push("/"); // Anasayfaya yönlendir
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -231,6 +273,7 @@ const PaymentPage = () => {
       <div className="mt-6">
         <button
           disabled={!isPayEnabled}
+          onClick={handlePayment} // Ödeme işlevini çağır
           className={`w-full py-3 rounded text-white text-lg font-semibold transition ${
             isPayEnabled
               ? "bg-orange-500 hover:bg-orange-600"

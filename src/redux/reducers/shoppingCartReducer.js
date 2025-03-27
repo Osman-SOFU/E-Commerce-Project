@@ -70,6 +70,10 @@ const shoppingCartReducer = (state = initialState, action) => {
       localStorage.setItem("billingAddress", JSON.stringify(action.payload));
       return { ...state, billingAddress: action.payload };
     }
+    case "CLEAR_CART": {
+      localStorage.removeItem("cart");
+      return { ...state, cart: [] };
+    }
     default:
       return state;
   }
