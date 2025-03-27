@@ -28,6 +28,7 @@ import Footer from "./components/footer.jsx";
 import ShoppingCart from "./components/shoppingCart";
 import ProtectedRoute from "./components/protectedRoute";
 import CreateOrderPage from "./pages/createOrderPage.jsx";
+import PaymentPage from "./pages/paymentPage.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -78,6 +79,7 @@ const App = () => {
             />
             <Route path="/contact" component={ContactPage} />
             <ProtectedRoute path="/create-order" component={CreateOrderPage} />
+            <ProtectedRoute path="/payment" component={PaymentPage} />
             <Route path="/team" component={TeamPage} />
             <Route path="/about-us" component={AboutUs} />
             <Route path="/signup" component={SignUpForm} />

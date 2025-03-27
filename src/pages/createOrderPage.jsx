@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   fetchAddresses,
   setShippingAddress,
@@ -24,9 +25,12 @@ const CreateOrderPage = () => {
   const token = useSelector((state) => state.auth.token);
   const addresses = useSelector((state) => state.shoppingCart.addresses);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [selectedShippingAddress, setSelectedShippingAddress] = useState(null);
   const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
+  const [isContractAccepted, setIsContractAccepted] = useState(false);
+  const [sameAddress, setSameAddress] = useState(true);
 
   useEffect(() => {
     dispatch(fetchAddresses());
@@ -123,6 +127,10 @@ const CreateOrderPage = () => {
   const handleSelectShipping = (address) => {
     setSelectedShippingAddress(address.id);
     dispatch(setShippingAddress(address));
+    if (sameAddress) {
+      setSelectedBillingAddress(address.id);
+      dispatch(setBillingAddress(address));
+    }
   };
 
   const handleSelectBilling = (address) => {
@@ -139,7 +147,7 @@ const CreateOrderPage = () => {
             address,
             selectedShippingAddress,
             handleSelectShipping,
-            "orange"
+            "blue"
           )
         )}
         <button
@@ -150,17 +158,40 @@ const CreateOrderPage = () => {
         </button>
       </div>
 
-      <h2 className="text-xl font-bold mt-8 mb-4">Fatura Adresi Seçin</h2>
-      <div className="grid grid-cols-2 gap-4">
-        {addresses.map((address) =>
-          renderAddressCard(
-            address,
-            selectedBillingAddress,
-            handleSelectBilling,
-            "blue"
-          )
-        )}
-      </div>
+      <label className="flex items-center mt-4">
+        <input
+          type="checkbox"
+          checked={sameAddress}
+          onChange={(e) => {
+            setSameAddress(e.target.checked);
+            if (e.target.checked) {
+              const selected = addresses.find(
+                (a) => a.id === selectedShippingAddress
+              );
+              setSelectedBillingAddress(selected?.id || null);
+              if (selected) dispatch(setBillingAddress(selected));
+            }
+          }}
+          className="mr-2"
+        />
+        Faturamı Aynı Adrese Gönder
+      </label>
+
+      {!sameAddress && (
+        <>
+          <h2 className="text-xl font-bold mt-8 mb-4">Fatura Adresi Seçin</h2>
+          <div className="grid grid-cols-2 gap-4">
+            {addresses.map((address) =>
+              renderAddressCard(
+                address,
+                selectedBillingAddress,
+                handleSelectBilling,
+                "blue"
+              )
+            )}
+          </div>
+        </>
+      )}
 
       {newAddress && (
         <div className="mt-6 p-4 border rounded-lg shadow-md bg-white">
@@ -239,7 +270,39 @@ const CreateOrderPage = () => {
         </div>
       )}
 
-      <button className="bg-orange-500 text-white py-3 w-full rounded mt-6 hover:bg-orange-600">
+      <div className="mt-6 flex items-start">
+        <input
+          type="checkbox"
+          checked={isContractAccepted}
+          onChange={(e) => setIsContractAccepted(e.target.checked)}
+          className="mt-1 mr-2"
+        />
+        <label>
+          <span className="font-medium">Ön Bilgilendirme Koşulları’nı</span> ve{" "}
+          <span className="font-medium">Mesafeli Satış Sözleşmesi’ni</span>{" "}
+          okudum, onaylıyorum.
+        </label>
+      </div>
+
+      <button
+        className={`py-3 w-full rounded mt-6 text-white ${
+          selectedShippingAddress &&
+          selectedBillingAddress &&
+          isContractAccepted
+            ? "bg-orange-500 hover:bg-orange-600"
+            : "bg-gray-400 cursor-not-allowed"
+        }`}
+        disabled={
+          !(
+            selectedShippingAddress &&
+            selectedBillingAddress &&
+            isContractAccepted
+          )
+        }
+        onClick={() => {
+          history.push("/payment");
+        }}
+      >
         Kaydet ve Devam Et
       </button>
     </div>
