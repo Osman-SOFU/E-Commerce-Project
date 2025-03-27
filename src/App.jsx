@@ -29,6 +29,7 @@ import ShoppingCart from "./components/shoppingCart";
 import ProtectedRoute from "./components/protectedRoute";
 import CreateOrderPage from "./pages/createOrderPage.jsx";
 import PaymentPage from "./pages/paymentPage.jsx";
+import OrdersPage from "./pages/ordersPage.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -80,6 +81,7 @@ const App = () => {
             <Route path="/contact" component={ContactPage} />
             <ProtectedRoute path="/create-order" component={CreateOrderPage} />
             <ProtectedRoute path="/payment" component={PaymentPage} />
+            <ProtectedRoute path="/orders" component={OrdersPage} />
             <Route path="/team" component={TeamPage} />
             <Route path="/about-us" component={AboutUs} />
             <Route path="/signup" component={SignUpForm} />

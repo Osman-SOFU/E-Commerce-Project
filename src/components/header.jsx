@@ -210,6 +210,9 @@ const Header = () => {
               >
                 Logout
               </button>
+              <Link to="/orders" className="hover:text-black">
+                Siparişlerim
+              </Link>
             </div>
           ) : (
             <div className="flex items-center space-x-4">
@@ -340,6 +343,14 @@ const Header = () => {
                 className="w-12 h-12 rounded-full"
               />
               <span className="mt-2">{user.name}</span>
+              <Link
+                to="/orders"
+                className="text-blue-500 mt-2 text-sm underline hover:text-blue-700"
+                onClick={() => setMenuOpen(false)}
+              >
+                Siparişlerim
+              </Link>
+
               <button
                 onClick={handleLogoutClick}
                 className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 mt-2"

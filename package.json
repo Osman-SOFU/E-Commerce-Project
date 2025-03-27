@@ -12,6 +12,7 @@
   "dependencies": {
     "@iconify/react": "^5.2.0",
     "@reduxjs/toolkit": "^2.6.0",
+    "@szhsin/react-accordion": "^1.4.0",
     "axios": "^1.7.9",
     "lucide-react": "^0.471.0",
     "md5": "^2.3.0",
