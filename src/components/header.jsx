@@ -1,4 +1,3 @@
-// filepath: e:\GitHub\E-Commerce-Project\src\components\header.jsx
 import { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { User, Search, ShoppingCart, Menu } from "lucide-react";
@@ -15,22 +14,22 @@ import {
   fetchProducts,
 } from "../redux/actions/productActions";
 import { slugify } from "../utils/slugify";
+import { toggleCart } from "../redux/actions/uiActions";
+import { removeFromFavorites } from "../redux/actions/favoritesActions";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
   const [searchVisible, setSearchVisible] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [favoritesVisible, setFavoritesVisible] = useState(false);
+  const favoritesRef = useRef(null); // Favoriler menüsü için ref
 
   const productList = useSelector((state) => state.product.productList);
+  const favorites = useSelector((state) => state.favorites.favorites);
 
   const filteredResults = productList.filter((p) =>
     p.name.toLowerCase().includes(searchInput.toLowerCase())
   );
-
-  const toggleCart = () => {
-    setCartOpen((prev) => !prev);
-  };
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -43,6 +42,7 @@ const Header = () => {
   const { categories } = useSelector((state) => state.categories);
 
   const cart = useSelector((state) => state.shoppingCart.cart);
+  const cartOpen = useSelector((state) => state.ui.cartOpen); // Redux'tan cartOpen durumunu al
 
   useEffect(() => {
     dispatch(loadUserFromLocalStorage());
@@ -52,14 +52,14 @@ const Header = () => {
 
   useEffect(() => {
     if (cart.length > 0) {
-      setCartOpen(true);
+      dispatch(toggleCart());
     }
-  }, [cart]);
+  }, [cart, dispatch]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (cartRef.current && !cartRef.current.contains(event.target)) {
-        setCartOpen(false);
+        dispatch(toggleCart());
       }
     };
 
@@ -72,7 +72,7 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [cartOpen]);
+  }, [cartOpen, dispatch]);
 
   useEffect(() => {
     const handleClickOutsideSearch = (event) => {
@@ -91,6 +91,24 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutsideSearch);
     };
   }, [searchVisible]);
+
+  const handleClickOutsideFavorites = (event) => {
+    if (favoritesRef.current && !favoritesRef.current.contains(event.target)) {
+      setFavoritesVisible(false); // Favoriler menüsünü kapat
+    }
+  };
+
+  useEffect(() => {
+    if (favoritesVisible) {
+      document.addEventListener("mousedown", handleClickOutsideFavorites);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutsideFavorites);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideFavorites);
+    };
+  }, [favoritesVisible]);
 
   const handleLoginClick = () => {
     history.push("/login");
@@ -120,6 +138,14 @@ const Header = () => {
   // Kadın ve Erkek Kategorilerini Filtreleme
   const womenCategories = categories.filter((cat) => cat.gender === "k");
   const menCategories = categories.filter((cat) => cat.gender === "e");
+
+  const handleToggleCart = () => {
+    dispatch(toggleCart());
+  };
+
+  const handleRemoveFavorite = (productId) => {
+    dispatch(removeFromFavorites(productId));
+  };
 
   return (
     <>
@@ -266,7 +292,7 @@ const Header = () => {
             onClick={() => setSearchVisible(!searchVisible)}
           />
 
-          <button onClick={toggleCart} className="relative">
+          <button onClick={handleToggleCart} className="relative">
             <Icon icon="mdi:cart" className="w-6 h-6 cursor-pointer" />
             {cart.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">
@@ -275,7 +301,18 @@ const Header = () => {
             )}
           </button>
 
-          <Icon icon="mdi:heart" className="w-6 h-6 cursor-pointer" />
+          {/* Favoriler Butonu */}
+          <button
+            onClick={() => setFavoritesVisible(!favoritesVisible)}
+            className="relative"
+          >
+            <Icon icon="mdi:heart" className="w-6 h-6 cursor-pointer" />
+            {favorites.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">
+                {favorites.length}
+              </span>
+            )}
+          </button>
         </div>
         <div className="lg:hidden flex items-center space-x-4">
           <User className="w-6 h-6 cursor-pointer" onClick={handleLoginClick} />
@@ -285,7 +322,7 @@ const Header = () => {
           />
 
           {/* Sepet Butonu - Hem Masaüstü Hem Mobilde */}
-          <button onClick={toggleCart} className="relative">
+          <button onClick={handleToggleCart} className="relative">
             <ShoppingCart className="w-6 h-6 cursor-pointer" />
             {cart.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">
@@ -294,6 +331,18 @@ const Header = () => {
             )}
           </button>
 
+          {/* Favoriler Butonu */}
+          <button
+            onClick={() => setFavoritesVisible(!favoritesVisible)}
+            className="relative"
+          >
+            <Icon icon="mdi:heart" className="w-6 h-6 cursor-pointer" />
+            {favorites.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">
+                {favorites.length}
+              </span>
+            )}
+          </button>
           <Menu
             className="w-6 h-6 cursor-pointer"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -344,6 +393,63 @@ const Header = () => {
             </div>
           </div>
         )}
+
+        {/* Favoriler Modal */}
+        {favoritesVisible && (
+          <div
+            ref={favoritesRef} // Ref'i buraya bağla
+            className="absolute top-full right-0 w-full sm:w-80 bg-white shadow-lg p-4 z-50"
+          >
+            <h3 className="font-bold mb-2">Favoriler</h3>
+            {favorites.length === 0 ? (
+              <p className="text-gray-500">Favorileriniz boş</p>
+            ) : (
+              favorites.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between mb-2 cursor-pointer"
+                  onClick={() => {
+                    const productSlug = item.name
+                      .toLowerCase()
+                      .replace(/\s+/g, "-");
+
+                    // Redux state'ini güncelle
+                    dispatch(setSelectedProduct(item));
+
+                    // Detay sayfasına yönlendir
+                    history.push(
+                      `/shop/unisex/fashion/${item.category_id}/${productSlug}/${item.id}`
+                    );
+
+                    // Modalı kapat
+                    setFavoritesVisible(false);
+                  }}
+                >
+                  <div className="flex items-center">
+                    <img
+                      src={item.images[0]?.url}
+                      alt={item.name}
+                      className="w-12 h-12 rounded-md"
+                    />
+                    <div className="ml-2">
+                      <h4 className="font-semibold text-sm">{item.name}</h4>
+                      <p className="text-sm text-gray-500">${item.price}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // Tıklama olayını durdur
+                      handleRemoveFavorite(item.id);
+                    }}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    ✖
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        )}
       </nav>
 
       {/* 🛒 Shopping Cart Açılır Penceresi */}
@@ -356,7 +462,7 @@ const Header = () => {
       >
         <div className="p-4 flex justify-between items-center border-b">
           <h3 className="font-bold">Sepet ({cart.length} Ürün)</h3>
-          <button onClick={toggleCart} className="text-gray-600 text-xl">
+          <button onClick={handleToggleCart} className="text-gray-600 text-xl">
             ✖
           </button>
         </div>

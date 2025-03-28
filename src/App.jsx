@@ -30,6 +30,7 @@ import ProtectedRoute from "./components/protectedRoute";
 import CreateOrderPage from "./pages/createOrderPage.jsx";
 import PaymentPage from "./pages/paymentPage.jsx";
 import OrdersPage from "./pages/ordersPage.jsx";
+import ScrollToTop from "./components/scrollToTop";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -64,33 +65,32 @@ const App = () => {
   return (
     <div className="App">
       <ToastContainer />
-      <div className="flex flex-col">
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route
-              path="/shop/:gender/:categoryName/:categoryId/:productNameSlug/:productId"
-              component={ProductDetailPage}
-            />
-            <Route exact path="/shop" component={ShopPage} />
-            <Route
-              path="/shop/:gender/:categoryName/:categoryId"
-              component={ShopPage}
-            />
-            <Route path="/contact" component={ContactPage} />
-            <ProtectedRoute path="/create-order" component={CreateOrderPage} />
-            <ProtectedRoute path="/payment" component={PaymentPage} />
-            <ProtectedRoute path="/orders" component={OrdersPage} />
-            <Route path="/team" component={TeamPage} />
-            <Route path="/about-us" component={AboutUs} />
-            <Route path="/signup" component={SignUpForm} />
-            <Route path="/login" component={LoginForm} />
-            <Route path="/cart" component={ShoppingCart} />
-          </Switch>
-          <Footer />
-        </Router>
-      </div>
+      <Router>
+        <ScrollToTop /> {/* Sayfa değişikliklerinde en üste kaydır */}
+        <Header />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route
+            path="/shop/:gender/:categoryName/:categoryId/:productNameSlug/:productId"
+            component={ProductDetailPage}
+          />
+          <Route exact path="/shop" component={ShopPage} />
+          <Route
+            path="/shop/:gender/:categoryName/:categoryId"
+            component={ShopPage}
+          />
+          <Route path="/contact" component={ContactPage} />
+          <ProtectedRoute path="/create-order" component={CreateOrderPage} />
+          <ProtectedRoute path="/payment" component={PaymentPage} />
+          <ProtectedRoute path="/orders" component={OrdersPage} />
+          <Route path="/team" component={TeamPage} />
+          <Route path="/about-us" component={AboutUs} />
+          <Route path="/signup" component={SignUpForm} />
+          <Route path="/login" component={LoginForm} />
+          <Route path="/cart" component={ShoppingCart} />
+        </Switch>
+        <Footer />
+      </Router>
     </div>
   );
 };

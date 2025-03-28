@@ -18,7 +18,12 @@ const productReducer = (state = initialState, action) => {
         productList: [...action.payload], // 🔥 Yeni veri geldiyse state'i güncelle
       };
     case "SET_PRODUCT_DETAIL":
-      return { ...state, productDetail: action.payload };
+      return {
+        ...state,
+        productDetail: action.payload,
+        selectedProduct: action.payload, // ✅ Ekle
+      };
+
     case "SET_TOTAL":
       return { ...state, total: action.payload };
     case "SET_FETCH_STATE":

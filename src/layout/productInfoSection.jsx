@@ -1,10 +1,18 @@
 import { Heart, ShoppingCart, Eye, Star } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../redux/actions/shoppingCartActions"; // Import the action
+import { toggleCart } from "../redux/actions/uiActions";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../redux/actions/favoritesActions";
 
 const ProductInfoSection = () => {
   const dispatch = useDispatch();
   const selectedProduct = useSelector((state) => state.product.selectedProduct);
+  const favorites = useSelector((state) => state.favorites.favorites);
+
+  const isFavorite = favorites.some((item) => item.id === selectedProduct.id);
 
   if (!selectedProduct) return <p>Loading product info...</p>;
 
@@ -16,6 +24,18 @@ const ProductInfoSection = () => {
 
   const handleAddToCart = () => {
     dispatch(addToCart(selectedProduct));
+  };
+
+  const handleToggleCart = () => {
+    dispatch(toggleCart());
+  };
+
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      dispatch(removeFromFavorites(selectedProduct.id));
+    } else {
+      dispatch(addToFavorites(selectedProduct));
+    }
   };
 
   return (
@@ -80,10 +100,18 @@ const ProductInfoSection = () => {
           >
             Select Options
           </button>
-          <button className="p-2 rounded-full border border-gray-300 hover:border-blue-500">
+          <button
+            onClick={handleToggleFavorite}
+            className={`p-2 rounded-full border ${
+              isFavorite ? "border-red-500 text-red-500" : "border-gray-300"
+            } hover:border-blue-500`}
+          >
             <Heart className="w-6 h-6" />
           </button>
-          <button className="p-2 rounded-full border border-gray-300 hover:border-blue-500">
+          <button
+            onClick={handleToggleCart}
+            className="p-2 rounded-full border border-gray-300 hover:border-blue-500"
+          >
             <ShoppingCart className="w-6 h-6" />
           </button>
           <button className="p-2 rounded-full border border-gray-300 hover:border-blue-500">
