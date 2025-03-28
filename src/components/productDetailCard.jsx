@@ -2,10 +2,22 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductInfoSection from "../layout/productInfoSection";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchProductById } from "../redux/actions/productActions";
+import { useDispatch } from "react-redux";
 
 const ProductDetailCard = () => {
   const selectedProduct = useSelector((state) => state.product.selectedProduct);
   const [selectedImage, setSelectedImage] = useState(0);
+  const { productId } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!selectedProduct && productId) {
+      dispatch(fetchProductById(productId));
+    }
+  }, [dispatch, selectedProduct, productId]);
 
   if (!selectedProduct) return <p>Loading product...</p>;
 

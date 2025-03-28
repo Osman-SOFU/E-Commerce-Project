@@ -1,0 +1,520 @@
+{
+  "info": {
+    "_postman_id": "6f4d4431-d979-45cf-ad65-64229e5af8a0",
+    "name": "WorkinTech E-Commerce API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "42244001"
+  },
+  "item": [
+    {
+      "name": "Get Roles",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/roles",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["roles"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Signup User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "\n                    {\n                        \"name\": \"Osman\",\n                        \"email\": \"osofu1903@gmail.com\",\n                        \"password\": \"Osman5454@\",\n                        \"role_id\": 1\n                    }\n                    "
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/signup",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["signup"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Signup Store",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"New Store\",\n  \"email\": \"newstore@example.com\",\n  \"password\": \"Store@1234\",\n  \"role_id\": 2,\n  \"store\": {\n    \"name\": \"Unique Store\",\n    \"phone\": \"05551234567\",\n    \"tax_no\": \"T5678V123456\",\n    \"bank_account\": \"TR098765432109876543210987\"\n  }\n}\n"
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/signup",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["signup"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"osofu1903@gmail.com\",\r\n  \"password\": \"Osman5454@\",\r\n  \"rememberMe\": true\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/login",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDMwMzQzNjMsImV4cCI6MTc0NDY3NTk2M30.5o8mihpbdL4SvZ1oMD5Rv_xhrnAuMc05IKh0eCVG5BE",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/verify",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["verify"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Categories",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/categories",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["categories"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Products",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/products",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["products"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get User Address",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDMwMzQzNjMsImV4cCI6MTc0NDY3NTk2M30.5o8mihpbdL4SvZ1oMD5Rv_xhrnAuMc05IKh0eCVG5BE",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/user/address",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["user", "address"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User Address",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDI1MDU3NzIsImV4cCI6MTc0NDE0NzM3Mn0.UmG_OpyQF8UaZfhMfQlvUF-wGGrTeIhwLnq82aqNyGg",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "Content-Type",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n      \"title\": \"ev adresi\",\r\n      \"name\": \"Alişan\",\r\n      \"surname\": \"Karababa\",\r\n      \"phone\": \"05376845834\",\r\n      \"city\": \"istanbul\",\r\n      \"district\": \"esenler\",\r\n      \"neighborhood\": \"adres detayları\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/user/address",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["user", "address"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User Address Update",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDI1MDU3NzIsImV4cCI6MTc0NDE0NzM3Mn0.UmG_OpyQF8UaZfhMfQlvUF-wGGrTeIhwLnq82aqNyGg",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n        \"id\": 5,\r\n        \"user_id\": 24,\r\n        \"title\": \"Ev\",\r\n        \"name\": \"Osman\",\r\n        \"surname\": \"Sofu\",\r\n        \"phone\": \"0 (542) 662 14 16\",\r\n        \"city\": \"Sakarya\",\r\n        \"district\": \"Kocaali\",\r\n        \"neighborhood\": \"Çukurköy\",\r\n        \"address\": \"Çakaldağ\"\r\n    }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/user/address",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["user", "address"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User Address Delete",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDI1MDU3NzIsImV4cCI6MTc0NDE0NzM3Mn0.UmG_OpyQF8UaZfhMfQlvUF-wGGrTeIhwLnq82aqNyGg",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n      \"title\": \"ev adresi\",\r\n      \"name\": \"Alişan\",\r\n      \"surname\": \"Karababa\",\r\n      \"phone\": \"05376845834\",\r\n      \"city\": \"istanbul\",\r\n      \"district\": \"esenler\",\r\n      \"neighborhood\": \"adres detayları\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/user/address/6",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["user", "address", "6"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get User Card",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDMwMzQzNjMsImV4cCI6MTc0NDY3NTk2M30.5o8mihpbdL4SvZ1oMD5Rv_xhrnAuMc05IKh0eCVG5BE",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"card_no\": \"1234123412341234\",\r\n    \"expire_month\": 12,\r\n    \"expire_year\": 2025,\r\n    \"name_on_card\": \"Ali Baş\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/user/card",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["user", "card"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User Card",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDMwMzQzNjMsImV4cCI6MTc0NDY3NTk2M30.5o8mihpbdL4SvZ1oMD5Rv_xhrnAuMc05IKh0eCVG5BE",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"card_no\": \"1234123412341234\",\r\n    \"expire_month\": 12,\r\n    \"expire_year\": 2025,\r\n    \"name_on_card\": \"Ali Baş\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/user/card",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["user", "card"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User Card Update",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDMwMzQzNjMsImV4cCI6MTc0NDY3NTk2M30.5o8mihpbdL4SvZ1oMD5Rv_xhrnAuMc05IKh0eCVG5BE",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"5\",\r\n    \"card_no\": \"1234123412341234\",\r\n    \"expire_month\": 1,\r\n    \"expire_year\": 2030,\r\n    \"name_on_card\": \"Ahmet Taş\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/user/card",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["user", "card"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User Card Delete",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDMwMzQzNjMsImV4cCI6MTc0NDY3NTk2M30.5o8mihpbdL4SvZ1oMD5Rv_xhrnAuMc05IKh0eCVG5BE",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"card_no\": \"1234123412341234\",\r\n    \"expire_month\": 12,\r\n    \"expire_year\": 2025,\r\n    \"name_on_card\": \"Ali Baş\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/user/card/5",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["user", "card", "5"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Complete Order",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDMwMzQzNjMsImV4cCI6MTc0NDY3NTk2M30.5o8mihpbdL4SvZ1oMD5Rv_xhrnAuMc05IKh0eCVG5BE",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"address_id\": 1,\r\n    \"order_date\": \"2024-01-10T14:18:30\",\r\n    \"card_no\": 1234123412341234,\r\n    \"card_name\": \"Ali Baş\",\r\n    \"card_expire_month\": 12,\r\n    \"card_expire_year\": 2025,\r\n    \"card_ccv\": 321,\r\n    \"price\": 1919,\r\n    \"products\": [\r\n        {\r\n            \"product_id\": 12,\r\n            \"count\": 1,\r\n            \"detail\": \"açık mavi - xl\"\r\n        },\r\n        {\r\n            \"product_id\": 13,\r\n            \"count\": 2,\r\n            \"detail\": \"siyah - lg\"\r\n        }\r\n    ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/order",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["order"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Complete Order",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpYXQiOjE3NDMwMzQzNjMsImV4cCI6MTc0NDY3NTk2M30.5o8mihpbdL4SvZ1oMD5Rv_xhrnAuMc05IKh0eCVG5BE",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"address_id\": 1,\r\n    \"order_date\": \"2024-01-10T14:18:30\",\r\n    \"card_no\": 1234123412341234,\r\n    \"card_name\": \"Ali Baş\",\r\n    \"card_expire_month\": 12,\r\n    \"card_expire_year\": 2025,\r\n    \"card_ccv\": 321,\r\n    \"price\": 1919,\r\n    \"products\": [\r\n        {\r\n            \"product_id\": 12,\r\n            \"count\": 1,\r\n            \"detail\": \"açık mavi - xl\"\r\n        },\r\n        {\r\n            \"product_id\": 13,\r\n            \"count\": 2,\r\n            \"detail\": \"siyah - lg\"\r\n        }\r\n    ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://workintech-fe-ecommerce.onrender.com/order",
+          "protocol": "https",
+          "host": ["workintech-fe-ecommerce", "onrender", "com"],
+          "path": ["order"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

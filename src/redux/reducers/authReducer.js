@@ -39,14 +39,14 @@ const authSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(logoutUser, (state) => {
-      console.warn("logoutUser action triggered, clearing localStorage!");
+      console.warn("logoutUser action triggered, clearing all localStorage!");
       state.user = null;
       state.token = null;
       state.loading = false;
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-    });
 
+      // Tüm localStorage verilerini temizle
+      localStorage.clear();
+    });
     builder.addCase(loadUserFromLocalStorage.fulfilled, (state, action) => {
       state.token = action.payload.token;
       state.user = action.payload.user;

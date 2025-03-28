@@ -2,7 +2,7 @@ import img from "../icons/aboutUsFooterImg.png";
 
 const AboutUsFooter = () => {
   return (
-    <div className="w-full bg-primary-color py-16 flex flex-col lg:flex-row justify-between items-center px-10 lg:px-20 text-white">
+    <div className="w-full bg-[#2e77c4] py-16 flex flex-col lg:flex-row justify-between items-center px-10 lg:px-20 text-white">
       {/* Metin Alanı */}
       <div className="w-full lg:w-1/2 text-center lg:text-left">
         <p className="text-sm font-semibold uppercase">WORK WITH US</p>
@@ -18,8 +18,8 @@ const AboutUsFooter = () => {
         </button>
       </div>
 
-      {/* Görsel Alanı */}
-      <div className="w-full lg:w-1/2 mt-8 lg:mt-0 flex justify-center hidden lg:block">
+      {/* Görsel Alanı (sadece desktop) */}
+      <div className="w-full lg:w-1/2 mt-8 lg:mt-0 flex justify-center hidden lg:flex">
         <img
           src={img}
           alt="Testimonial Image"

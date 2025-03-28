@@ -10,11 +10,23 @@ import {
   loadUserFromLocalStorage,
 } from "../redux/actions/authActions";
 import { fetchCategories } from "../redux/actions/categoryActions";
+import {
+  setSelectedProduct,
+  fetchProducts,
+} from "../redux/actions/productActions";
 import { slugify } from "../utils/slugify";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [searchVisible, setSearchVisible] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+
+  const productList = useSelector((state) => state.product.productList);
+
+  const filteredResults = productList.filter((p) =>
+    p.name.toLowerCase().includes(searchInput.toLowerCase())
+  );
 
   const toggleCart = () => {
     setCartOpen((prev) => !prev);
@@ -25,6 +37,7 @@ const Header = () => {
 
   const menuRef = useRef(null);
   const cartRef = useRef(null);
+  const searchRef = useRef(null);
 
   const user = useSelector((state) => state.auth.user); // Redux state'inden user al
   const { categories } = useSelector((state) => state.categories);
@@ -34,6 +47,7 @@ const Header = () => {
   useEffect(() => {
     dispatch(loadUserFromLocalStorage());
     dispatch(fetchCategories());
+    dispatch(fetchProducts()); // tüm ürünleri getir (arama için)
   }, [dispatch]);
 
   useEffect(() => {
@@ -59,6 +73,24 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [cartOpen]);
+
+  useEffect(() => {
+    const handleClickOutsideSearch = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSearchVisible(false);
+      }
+    };
+
+    if (searchVisible) {
+      document.addEventListener("mousedown", handleClickOutsideSearch);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutsideSearch);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideSearch);
+    };
+  }, [searchVisible]);
 
   const handleLoginClick = () => {
     history.push("/login");
@@ -112,7 +144,7 @@ const Header = () => {
       </div>
 
       {/* Ana Menü */}
-      <nav className="flex items-center justify-between px-6 py-4">
+      <nav className="relative flex items-center justify-between px-6 py-4">
         <div className="text-2xl font-bold">Bandage</div>
         <div className="hidden lg:flex space-x-6 items-center text-gray-700 font-medium">
           <Link to="/" className="hover:text-black">
@@ -229,7 +261,10 @@ const Header = () => {
               </button>
             </div>
           )}
-          <Search className="w-6 h-6 cursor-pointer" />
+          <Search
+            className="w-6 h-6 cursor-pointer"
+            onClick={() => setSearchVisible(!searchVisible)}
+          />
 
           <button onClick={toggleCart} className="relative">
             <Icon icon="mdi:cart" className="w-6 h-6 cursor-pointer" />
@@ -244,7 +279,10 @@ const Header = () => {
         </div>
         <div className="lg:hidden flex items-center space-x-4">
           <User className="w-6 h-6 cursor-pointer" onClick={handleLoginClick} />
-          <Search className="w-6 h-6 cursor-pointer" />
+          <Search
+            className="w-6 h-6 cursor-pointer"
+            onClick={() => setSearchVisible(!searchVisible)}
+          />
 
           {/* Sepet Butonu - Hem Masaüstü Hem Mobilde */}
           <button onClick={toggleCart} className="relative">
@@ -261,6 +299,51 @@ const Header = () => {
             onClick={() => setMenuOpen(!menuOpen)}
           />
         </div>
+        {searchVisible && (
+          <div
+            ref={searchRef}
+            className="absolute top-full left-0 w-full bg-white z-50 shadow-md px-6 py-4"
+          >
+            <input
+              type="text"
+              className="w-full border border-gray-300 px-4 py-2 rounded mb-3"
+              placeholder="Ürün ara..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <div className="max-h-64 overflow-y-auto divide-y">
+              {filteredResults.slice(0, 10).map((product) => (
+                <div
+                  key={product.id}
+                  className="p-2 cursor-pointer hover:bg-gray-100 flex items-center gap-3"
+                  onClick={() => {
+                    dispatch(setSelectedProduct(product));
+                    const productSlug = product.name
+                      .toLowerCase()
+                      .replace(/\s+/g, "-");
+                    history.push(
+                      `/shop/unisex/fashion/${product.category_id}/${productSlug}/${product.id}`
+                    );
+                    setSearchVisible(false);
+                    setSearchInput("");
+                  }}
+                >
+                  <img
+                    src={product.images?.[0]?.url}
+                    alt={product.name}
+                    className="w-10 h-10 object-cover rounded"
+                  />
+                  <span>{product.name}</span>
+                </div>
+              ))}
+              {filteredResults.length === 0 && (
+                <div className="text-gray-500 text-sm py-2 px-1">
+                  Sonuç bulunamadı.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* 🛒 Shopping Cart Açılır Penceresi */}
@@ -326,15 +409,15 @@ const Header = () => {
           <Link to="/" className="text-gray-700">
             Home
           </Link>
-          <Link to="/product/:productId" className="text-gray-700">
+          <Link to="/shop" className="text-gray-700">
             Product
           </Link>
-          <a href="#" className="text-gray-700">
+          <Link to="/cart" className="text-gray-700">
             Pricing
-          </a>
-          <a href="#" className="text-gray-700">
+          </Link>
+          <Link to="/about-us" className="text-gray-700">
             Contact
-          </a>
+          </Link>
           {user ? (
             <div className="flex flex-col items-center">
               <img
