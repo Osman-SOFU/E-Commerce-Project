@@ -19,7 +19,7 @@ const AboutUsFooter = () => {
       </div>
 
       {/* Görsel Alanı (sadece desktop) */}
-      <div className="w-full lg:w-1/2 mt-8 lg:mt-0 flex justify-center hidden lg:flex">
+      <div className="w-full lg:w-1/2 mt-8 lg:mt-0 justify-center hidden lg:flex">
         <img
           src={img}
           alt="Testimonial Image"
